@@ -199,11 +199,25 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(78, 205, 196, 0.3);
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            touch-action: manipulation;
         }
 
-        .answer-btn:hover {
+        .answer-btn:hover:not(:disabled) {
             transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(78, 205, 196, 0.4);
+        }
+
+        .answer-btn:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
         }
 
         .answer-btn.correct {
@@ -1472,23 +1486,41 @@
                 const optionsContainer = document.getElementById('answerOptions');
                 optionsContainer.innerHTML = '';
                 
-                this.currentQuestion.options.forEach(option => {
+                this.currentQuestion.options.forEach((option, index) => {
                     const button = document.createElement('button');
                     button.className = 'answer-btn';
                     button.textContent = option;
-                    button.addEventListener('click', () => {
+                    button.type = 'button'; // Ensure it's a proper button
+                    button.setAttribute('data-option', option);
+                    button.setAttribute('data-index', index);
+                    
+                    // Add click event listener
+                    button.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
                         this.checkAnswer(option, button);
                     });
+                    
+                    // Also add touch event for mobile
+                    button.addEventListener('touchend', (event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        this.checkAnswer(option, button);
+                    });
+                    
                     optionsContainer.appendChild(button);
                 });
             }
 
             checkAnswer(selectedAnswer, buttonElement) {
+                console.log('Answer clicked:', selectedAnswer); // Debug log
+                
                 const isCorrect = selectedAnswer === this.currentQuestion.correct;
                 
-                // Disable all buttons
+                // Disable all buttons immediately to prevent double clicks
                 document.querySelectorAll('.answer-btn').forEach(btn => {
                     btn.disabled = true;
+                    btn.style.pointerEvents = 'none';
                 });
                 
                 if (isCorrect) {
@@ -1578,12 +1610,13 @@
                 // Re-enable buttons and clear classes
                 document.querySelectorAll('.answer-btn').forEach(btn => {
                     btn.disabled = false;
+                    btn.style.pointerEvents = 'auto';
                     btn.classList.remove('correct', 'incorrect');
                 });
                 
-                // Remove any existing restart button
-                const existingRestartBtn = document.querySelector('.controls .control-btn[textContent*="Play Again"]');
-                if (existingRestartBtn) {
+                // Remove any existing restart button from previous game
+                const existingRestartBtn = document.querySelector('.controls .control-btn:last-child');
+                if (existingRestartBtn && existingRestartBtn.textContent.includes('Play Again')) {
                     existingRestartBtn.remove();
                 }
             }
