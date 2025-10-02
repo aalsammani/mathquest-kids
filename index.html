@@ -12,34 +12,58 @@
         }
 
         body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Fredoka', 'Comic Sans MS', cursive, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #333;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Floating background shapes */
+        .bg-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
         }
 
         .app-container {
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
             width: 90%;
-            max-width: 800px;
+            max-width: 900px;
             min-height: 600px;
             overflow: hidden;
             position: relative;
+            z-index: 1;
         }
 
         .header {
             background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
             background-size: 300% 300%;
             animation: gradient 6s ease infinite;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            position: relative;
         }
 
         @keyframes gradient {
@@ -49,142 +73,275 @@
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            font-size: 2.8em;
+            margin-bottom: 5px;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+            animation: titleBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes titleBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .author-name {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            font-weight: bold;
         }
 
         .grade-selector {
-            padding: 20px;
+            padding: 30px;
             text-align: center;
-            background: #f8f9ff;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
+        }
+
+        .grade-selector h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 1.8em;
         }
 
         .grade-btn {
             background: linear-gradient(45deg, #ff6b6b, #ff8e53);
             color: white;
             border: none;
-            padding: 15px 30px;
-            margin: 10px;
-            border-radius: 25px;
-            font-size: 18px;
+            padding: 18px 35px;
+            margin: 12px;
+            border-radius: 30px;
+            font-size: 20px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+            transform: scale(1);
         }
 
         .grade-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.4);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.5);
         }
 
         .grade-btn.active {
             background: linear-gradient(45deg, #4ecdc4, #44a08d);
-            box-shadow: 0 8px 20px rgba(78, 205, 196, 0.4);
+            box-shadow: 0 10px 25px rgba(78, 205, 196, 0.5);
+            animation: wiggle 0.5s ease;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
         }
 
         .topic-selector {
-            padding: 20px;
+            padding: 30px;
             display: none;
-            background: #f0f4ff;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e0e8ff 100%);
+        }
+
+        .topic-selector h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            text-align: center;
         }
 
         .topic-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
             margin-top: 20px;
         }
 
         .topic-card {
             background: white;
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 25px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            border: 3px solid transparent;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 4px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transition: left 0.5s;
+        }
+
+        .topic-card:hover::before {
+            left: 100%;
         }
 
         .topic-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             border-color: #ff6b6b;
         }
 
         .topic-icon {
-            font-size: 3em;
-            margin-bottom: 10px;
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .topic-card h3 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.3em;
+        }
+
+        .topic-card p {
+            color: #666;
+            font-size: 0.95em;
         }
 
         .game-area {
-            padding: 30px;
+            padding: 35px;
             display: none;
             text-align: center;
-            min-height: 400px;
+            min-height: 450px;
+            background: linear-gradient(135deg, #fff 0%, #f8f9ff 100%);
         }
 
         .progress-bar {
             background: #e0e0e0;
-            height: 20px;
-            border-radius: 10px;
+            height: 25px;
+            border-radius: 15px;
             overflow: hidden;
             margin-bottom: 30px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #4ecdc4, #44a08d);
             transition: width 0.5s ease;
-            border-radius: 10px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(78, 205, 196, 0.5);
         }
 
         .question-display {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 40px;
-            border-radius: 20px;
-            margin: 20px 0;
-            font-size: 2.5em;
+            padding: 45px 30px;
+            border-radius: 25px;
+            margin: 25px 0;
+            font-size: 2.2em;
             font-weight: bold;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .visual-area {
-            margin: 20px 0;
-            min-height: 100px;
+            margin: 30px 0;
+            min-height: 150px;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
+            padding: 20px;
         }
 
         .visual-item {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             background: #ff6b6b;
             border-radius: 50%;
             display: inline-block;
             margin: 5px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            animation: itemPop 0.5s ease backwards;
         }
 
-        .visual-item.apple { background: #ff6b6b; }
-        .visual-item.orange { background: #ffa726; }
-        .visual-item.green { background: #66bb6a; }
-        .visual-item.blue { background: #42a5f5; }
-        .visual-item.purple { background: #ab47bc; }
+        @keyframes itemPop {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .visual-item.apple { background: linear-gradient(135deg, #ff6b6b, #ee5a6f); }
+        .visual-item.orange { background: linear-gradient(135deg, #ffa726, #ff9800); }
+        .visual-item.green { background: linear-gradient(135deg, #66bb6a, #4caf50); }
+        .visual-item.blue { background: linear-gradient(135deg, #42a5f5, #2196f3); }
+        .visual-item.purple { background: linear-gradient(135deg, #ab47bc, #9c27b0); }
+
+        /* Multiplication groups */
+        .mult-group {
+            display: inline-block;
+            margin: 15px;
+            animation: groupPop 0.6s ease backwards;
+        }
+
+        @keyframes groupPop {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .mult-group-circle {
+            position: relative;
+            border: 4px dashed #667eea;
+            border-radius: 50%;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            min-width: 120px;
+            min-height: 120px;
+        }
+
+        .mult-group-circle .visual-item {
+            width: 35px;
+            height: 35px;
+        }
+
+        .mult-label {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
 
         .answer-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            max-width: 600px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
@@ -192,37 +349,43 @@
             background: linear-gradient(45deg, #4ecdc4, #44a08d);
             color: white;
             border: none;
-            padding: 20px;
-            border-radius: 15px;
-            font-size: 1.5em;
+            padding: 25px;
+            border-radius: 20px;
+            font-size: 1.6em;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(78, 205, 196, 0.3);
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            touch-action: manipulation;
+            box-shadow: 0 10px 25px rgba(78, 205, 196, 0.4);
+            position: relative;
+            overflow: hidden;
         }
 
-        .answer-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(78, 205, 196, 0.4);
+        .answer-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
 
-        .answer-btn:active:not(:disabled) {
-            transform: translateY(-1px);
+        .answer-btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
-        .answer-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.8;
+        .answer-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(78, 205, 196, 0.5);
         }
 
         .answer-btn.correct {
             background: linear-gradient(45deg, #66bb6a, #4caf50);
-            animation: bounce 0.6s ease;
+            animation: correctBounce 0.6s ease;
         }
 
         .answer-btn.incorrect {
@@ -230,35 +393,43 @@
             animation: shake 0.5s ease;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+        @keyframes correctBounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) scale(1); }
+            40% { transform: translateY(-15px) scale(1.1); }
+            60% { transform: translateY(-7px) scale(1.05); }
         }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+            25% { transform: translateX(-10px) rotate(-5deg); }
+            75% { transform: translateX(10px) rotate(5deg); }
         }
 
         .feedback {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 15px;
-            font-size: 1.2em;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 20px;
+            font-size: 1.3em;
             font-weight: bold;
             display: none;
+            animation: feedbackSlide 0.5s ease;
+        }
+
+        @keyframes feedbackSlide {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .feedback.correct {
             background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
             color: #2e7d32;
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
         }
 
         .feedback.incorrect {
             background: linear-gradient(135deg, #ffcdd2, #ef9a9a);
             color: #c62828;
+            box-shadow: 0 10px 25px rgba(244, 67, 54, 0.3);
         }
 
         .controls {
@@ -270,26 +441,30 @@
         }
 
         .voice-controls {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: center;
+            background: rgba(255,255,255,0.5);
+            padding: 15px;
+            border-radius: 20px;
         }
 
         .voice-btn {
             background: linear-gradient(45deg, #ff6b6b, #ff8e53);
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 20px;
-            font-size: 14px;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: bold;
             cursor: pointer;
             margin: 5px;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
         }
 
         .voice-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.4);
         }
 
         .voice-btn.active {
@@ -297,54 +472,45 @@
             animation: pulse 2s infinite;
         }
 
-        .voice-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .speaker-icon {
-            display: inline-block;
-            animation: soundWave 1s ease-in-out infinite;
-        }
-
-        @keyframes soundWave {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.08); }
         }
 
         .control-btn {
             background: linear-gradient(45deg, #667eea, #764ba2);
             color: white;
             border: none;
-            padding: 15px 25px;
-            border-radius: 25px;
-            font-size: 16px;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 17px;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
         .control-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.5);
         }
 
         .score-display {
             background: linear-gradient(135deg, #ffd54f, #ffb300);
             color: #bf360c;
-            padding: 15px 25px;
-            border-radius: 25px;
-            font-size: 1.2em;
+            padding: 18px 30px;
+            border-radius: 30px;
+            font-size: 1.3em;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: inline-block;
-            box-shadow: 0 8px 20px rgba(255, 213, 79, 0.3);
+            box-shadow: 0 10px 25px rgba(255, 213, 79, 0.4);
+            animation: scoreFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes scoreFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         .celebration {
@@ -359,15 +525,15 @@
 
         .confetti {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #ff6b6b;
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
             animation: fall 3s linear infinite;
         }
 
         @keyframes fall {
             to {
-                transform: translateY(100vh) rotate(360deg);
+                transform: translateY(100vh) rotate(720deg);
             }
         }
 
@@ -381,29 +547,42 @@
             }
             
             .header h1 {
-                font-size: 2em;
+                font-size: 2.2em;
             }
             
             .question-display {
-                font-size: 1.8em;
-                padding: 25px;
+                font-size: 1.6em;
+                padding: 30px 20px;
             }
             
             .answer-btn {
+                padding: 18px;
+                font-size: 1.3em;
+            }
+
+            .mult-group-circle {
+                min-width: 100px;
+                min-height: 100px;
                 padding: 15px;
-                font-size: 1.2em;
             }
         }
     </style>
 </head>
 <body>
+    <div class="bg-shapes">
+        <div class="bg-shape" style="font-size: 100px; top: 10%; left: 10%;">⭐</div>
+        <div class="bg-shape" style="font-size: 80px; top: 70%; left: 80%; animation-delay: -5s;">🌟</div>
+        <div class="bg-shape" style="font-size: 90px; top: 50%; left: 5%; animation-delay: -10s;">✨</div>
+        <div class="bg-shape" style="font-size: 70px; top: 20%; left: 85%; animation-delay: -15s;">💫</div>
+    </div>
+
     <div class="app-container">
         <header class="header">
             <h1>🌟 MathQuest Kids 🌟</h1>
-            <p>Fun Math Adventures for Little Learners!</p>
+            <p class="author-name">by Abdallah Alsammani</p>
+            <p class="subtitle">Fun Math Learning for Grades K-3</p>
         </header>
 
-        <!-- Grade Selection -->
         <div id="gradeSelection" class="grade-selector">
             <h2>Choose Your Grade Level:</h2>
             <button class="grade-btn" data-grade="k">🎈 Kindergarten</button>
@@ -412,15 +591,11 @@
             <button class="grade-btn" data-grade="3">🏆 Grade 3</button>
         </div>
 
-        <!-- Topic Selection -->
         <div id="topicSelection" class="topic-selector">
             <h2>Choose a Math Adventure:</h2>
-            <div class="topic-grid" id="topicGrid">
-                <!-- Topics will be populated by JavaScript -->
-            </div>
+            <div class="topic-grid" id="topicGrid"></div>
         </div>
 
-        <!-- Game Area -->
         <div id="gameArea" class="game-area">
             <div class="score-display" id="scoreDisplay">Score: 0 | Streak: 0</div>
             <div class="voice-controls">
@@ -457,14 +632,12 @@
                 this.totalQuestions = 10;
                 this.questionsCorrect = 0;
                 
-                // Voice settings
                 this.voiceEnabled = true;
                 this.speechSynthesis = window.speechSynthesis;
                 this.currentVoice = null;
-                this.speechRate = 0.8; // Slower for kids
+                this.speechRate = 0.8;
                 this.availableVoices = [];
                 
-                // Initialize voices
                 this.initializeVoices();
                 
                 this.topics = {
@@ -502,14 +675,12 @@
             }
 
             setupEventListeners() {
-                // Grade selection
                 document.querySelectorAll('.grade-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         this.selectGrade(e.target.dataset.grade);
                     });
                 });
 
-                // Control buttons
                 document.getElementById('backBtn').addEventListener('click', () => {
                     this.showTopicSelection();
                 });
@@ -522,7 +693,6 @@
                     this.showHint();
                 });
 
-                // Voice control buttons
                 document.getElementById('voiceToggle').addEventListener('click', () => {
                     this.toggleVoice();
                 });
@@ -537,11 +707,9 @@
             }
 
             initializeVoices() {
-                // Load available voices
                 const loadVoices = () => {
                     this.availableVoices = this.speechSynthesis.getVoices();
                     
-                    // Prefer child-friendly voices
                     const preferredVoices = [
                         'Google UK English Female',
                         'Microsoft Zira Desktop',
@@ -550,62 +718,16 @@
                         'Google US English'
                     ];
                     
-                    // Find the best voice
                     for (let preferred of preferredVoices) {
                         const voice = this.availableVoices.find(v => 
                             v.name.includes(preferred) || v.name.toLowerCase().includes('female')
                         );
                         if (voice) {
                             this.currentVoice = voice;
-                        case 'counting_sequence':
-                        const sequenceContainer = document.createElement('div');
-                        sequenceContainer.style.display = 'flex';
-                        sequenceContainer.style.justifyContent = 'center';
-                        sequenceContainer.style.alignItems = 'center';
-                        sequenceContainer.style.flexWrap = 'wrap';
-                        sequenceContainer.style.gap = '10px';
-                        sequenceContainer.style.margin = '20px 0';
-                        
-                        // Show sequence leading up to the target
-                        for (let i = visual.start; i < visual.target; i++) {
-                            const numberBox = document.createElement('div');
-                            numberBox.textContent = i;
-                            numberBox.style.width = '50px';
-                            numberBox.style.height = '50px';
-                            numberBox.style.display = 'flex';
-                            numberBox.style.alignItems = 'center';
-                            numberBox.style.justifyContent = 'center';
-                            numberBox.style.backgroundColor = '#4ecdc4';
-                            numberBox.style.color = 'white';
-                            numberBox.style.borderRadius = '10px';
-                            numberBox.style.fontSize = '18px';
-                            numberBox.style.fontWeight = 'bold';
-                            numberBox.style.boxShadow = '0 4px 8px rgba(78, 205, 196, 0.3)';
-                            sequenceContainer.appendChild(numberBox);
-                        }
-                        
-                        // Add question mark for next number
-                        const questionBox = document.createElement('div');
-                        questionBox.textContent = '?';
-                        questionBox.style.width = '50px';
-                        questionBox.style.height = '50px';
-                        questionBox.style.display = 'flex';
-                        questionBox.style.alignItems = 'center';
-                        questionBox.style.justifyContent = 'center';
-                        questionBox.style.backgroundColor = '#ff6b6b';
-                        questionBox.style.color = 'white';
-                        questionBox.style.borderRadius = '10px';
-                        questionBox.style.fontSize = '24px';
-                        questionBox.style.fontWeight = 'bold';
-                        questionBox.style.boxShadow = '0 4px 8px rgba(255, 107, 107, 0.3)';
-                        sequenceContainer.appendChild(questionBox);
-                        
-                        visualArea.appendChild(sequenceContainer);
-                        break;
+                            break;
                         }
                     }
                     
-                    // Fallback to first English voice
                     if (!this.currentVoice) {
                         this.currentVoice = this.availableVoices.find(v => 
                             v.lang.startsWith('en')
@@ -613,28 +735,21 @@
                     }
                 };
 
-                // Load voices immediately if available
                 loadVoices();
-                
-                // Also load when voices change (some browsers load async)
                 this.speechSynthesis.addEventListener('voiceschanged', loadVoices);
             }
 
             speak(text, options = {}) {
                 if (!this.voiceEnabled || !this.speechSynthesis) return;
                 
-                // Stop any current speech
                 this.speechSynthesis.cancel();
                 
                 const utterance = new SpeechSynthesisUtterance(text);
-                
-                // Configure utterance
                 utterance.voice = this.currentVoice;
                 utterance.rate = options.rate || this.speechRate;
-                utterance.pitch = options.pitch || 1.1; // Slightly higher for kids
+                utterance.pitch = options.pitch || 1.1;
                 utterance.volume = options.volume || 0.8;
                 
-                // Add visual feedback
                 if (options.showSpeaking) {
                     this.showSpeakingIndicator();
                     utterance.addEventListener('end', () => {
@@ -689,7 +804,7 @@
             showSpeakingIndicator() {
                 const indicator = document.createElement('span');
                 indicator.id = 'speakingIndicator';
-                indicator.innerHTML = ' <span class="speaker-icon">🔊</span>';
+                indicator.innerHTML = ' <span style="animation: soundWave 1s ease-in-out infinite;">🔊</span>';
                 indicator.style.color = '#4ecdc4';
                 indicator.style.fontWeight = 'bold';
                 
@@ -707,7 +822,6 @@
             selectGrade(grade) {
                 this.currentGrade = grade;
                 
-                // Update active grade button
                 document.querySelectorAll('.grade-btn').forEach(btn => {
                     btn.classList.remove('active');
                 });
@@ -728,9 +842,10 @@
                 const topicGrid = document.getElementById('topicGrid');
                 topicGrid.innerHTML = '';
                 
-                this.topics[this.currentGrade].forEach(topic => {
+                this.topics[this.currentGrade].forEach((topic, index) => {
                     const topicCard = document.createElement('div');
                     topicCard.className = 'topic-card';
+                    topicCard.style.animationDelay = `${index * 0.1}s`;
                     topicCard.innerHTML = `
                         <div class="topic-icon">${topic.icon}</div>
                         <h3>${topic.name}</h3>
@@ -759,7 +874,6 @@
             startGame() {
                 this.updateScore();
                 
-                // Welcome message with voice
                 const welcomeMessages = [
                     `Welcome to ${this.getTopicName()}! Let's practice some math together!`,
                     `Great choice! Time to have fun with ${this.getTopicName()}!`,
@@ -816,25 +930,18 @@
 
             generateQuestion() {
                 const generators = {
-                    // Kindergarten
                     counting: () => this.generateCounting(),
                     shapes: () => this.generateShapes(),
                     patterns: () => this.generatePatterns(),
                     size: () => this.generateSize(),
-                    
-                    // Grade 1
                     addition10: () => this.generateAddition(10),
                     subtraction10: () => this.generateSubtraction(10),
                     counting20: () => this.generateCountingHigher(),
                     place_value: () => this.generatePlaceValue(),
-                    
-                    // Grade 2
                     addition100: () => this.generateAddition(100),
                     subtraction100: () => this.generateSubtraction(100),
                     skip_counting: () => this.generateSkipCounting(),
                     time: () => this.generateTime(),
-                    
-                    // Grade 3
                     multiplication: () => this.generateMultiplication(),
                     division: () => this.generateDivision(),
                     fractions: () => this.generateFractions(),
@@ -845,7 +952,7 @@
             }
 
             generateCounting() {
-                const max = Math.floor(Math.random() * 5) + 3; // 3-7 objects
+                const max = Math.floor(Math.random() * 5) + 3;
                 const colors = ['apple', 'orange', 'green', 'blue', 'purple'];
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 
@@ -868,64 +975,50 @@
 
             generateShapes() {
                 const shapes = [
-                    { name: 'circle', symbol: '⚪', sides: 'no corners, curved line' },
-                    { name: 'square', symbol: '⬜', sides: '4 equal sides and corners' },
-                    { name: 'triangle', symbol: '🔺', sides: '3 sides and corners' },
-                    { name: 'rectangle', symbol: '▭', sides: '4 sides and corners, opposite sides equal' }
+                    { name: 'circle', symbol: '⚪', sides: 'curved' },
+                    { name: 'square', symbol: '⬜', sides: '4 equal' },
+                    { name: 'triangle', symbol: '🔺', sides: '3' },
+                    { name: 'rectangle', symbol: '▭', sides: '4' }
                 ];
                 const shape = shapes[Math.floor(Math.random() * shapes.length)];
                 const wrongShapes = shapes.filter(s => s !== shape).slice(0, 3);
 
                 return {
-                    question: `Which shape is this?`,
-                    visual: { type: 'shape', shape: shape.symbol, name: shape.name },
+                    question: `Which shape is this? ${shape.symbol}`,
+                    visual: { type: 'shape', shape: shape.symbol },
                     correct: shape.name,
                     options: [shape.name, ...wrongShapes.map(s => s.name)].sort(() => Math.random() - 0.5),
-                    hint: `This shape has ${shape.sides}.`
+                    hint: `This shape has ${shape.sides} sides.`
                 };
             }
 
             generatePatterns() {
                 const patterns = [
-                    { pattern: ['🔴', '🔵'], next: '🔴', name: 'red-blue pattern' },
-                    { pattern: ['⭐', '⭐', '❤️'], next: '⭐', name: 'star-star-heart pattern' },
-                    { pattern: ['🟡', '🟢', '🟡'], next: '🟢', name: 'yellow-green-yellow pattern' },
-                    { pattern: ['🔴', '🔴', '🔵'], next: '🔴', name: 'red-red-blue pattern' }
+                    { pattern: ['🔴', '🔵'], next: '🔴' },
+                    { pattern: ['⭐', '⭐', '❤️'], next: '⭐' },
+                    { pattern: ['🟡', '🟢', '🟡'], next: '🟢' }
                 ];
                 const selected = patterns[Math.floor(Math.random() * patterns.length)];
                 
-                // Create wrong answer options from other patterns
-                const wrongOptions = patterns
-                    .filter(p => p !== selected)
-                    .map(p => p.next)
-                    .slice(0, 3);
-                
                 return {
                     question: "What comes next in the pattern?",
-                    visual: { 
-                        type: 'pattern', 
-                        pattern: [...selected.pattern, ...selected.pattern, '❓'],
-                        patternName: selected.name
-                    },
+                    visual: { type: 'pattern', pattern: [...selected.pattern, ...selected.pattern, '?'] },
                     correct: selected.next,
-                    options: [selected.next, ...wrongOptions].sort(() => Math.random() - 0.5),
-                    hint: `Look for the repeating ${selected.name}!`
+                    options: ['🔴', '🔵', '⭐', '❤️', '🟡', '🟢'].slice(0, 4),
+                    hint: "Look for the repeating pattern!"
                 };
             }
 
             generateSize() {
-                const questions = [
-                    { question: 'Which circle is bigger?', correct: 'the big circle' },
-                    { question: 'Which circle is smaller?', correct: 'the small circle' }
-                ];
-                const selected = questions[Math.floor(Math.random() * questions.length)];
+                const sizes = ['big', 'small'];
+                const correct = sizes[Math.floor(Math.random() * 2)];
                 
                 return {
-                    question: selected.question,
-                    visual: { type: 'size', questionType: selected.correct },
-                    correct: selected.correct,
-                    options: ['the big circle', 'the small circle'],
-                    hint: "Look carefully at the sizes and compare them!"
+                    question: "Which circle is bigger?",
+                    visual: { type: 'size', big: true },
+                    correct: correct,
+                    options: ['big', 'small'],
+                    hint: "Compare the sizes carefully!"
                 };
             }
 
@@ -974,23 +1067,15 @@
             }
 
             generateCountingHigher() {
-                const start = Math.floor(Math.random() * 5) + 11; // 11-15
-                const target = start + Math.floor(Math.random() * 3) + 2; // +2 to +4
-                
-                // Generate wrong answers
-                const wrongAnswers = [];
-                [target + 1, target - 1, target + 2].forEach(wrong => {
-                    if (wrong > 0 && wrong <= 20 && wrong !== target) {
-                        wrongAnswers.push(wrong);
-                    }
-                });
+                const start = Math.floor(Math.random() * 10) + 10;
+                const count = Math.floor(Math.random() * 5) + 3;
                 
                 return {
-                    question: `What number comes after ${target - 1}?`,
-                    visual: { type: 'counting_sequence', start: start, target: target },
-                    correct: target,
-                    options: [target, ...wrongAnswers.slice(0, 3)].sort(() => Math.random() - 0.5),
-                    hint: `Count up from ${start}: ${start}, ${start + 1}, ${start + 2}...`
+                    question: `Count from ${start}. What comes after ${start + count - 1}?`,
+                    visual: null,
+                    correct: start + count,
+                    options: [start + count, start + count + 1, start + count - 1, start + count + 2],
+                    hint: `Keep counting: ${start}, ${start + 1}, ${start + 2}...`
                 };
             }
 
@@ -1026,40 +1111,34 @@
                 const hour = Math.floor(Math.random() * 12) + 1;
                 const minute = [0, 30][Math.floor(Math.random() * 2)];
                 const timeStr = minute === 0 ? `${hour}:00` : `${hour}:30`;
-                const displayTime = minute === 0 ? `${hour} o'clock` : `${hour}:30`;
-                
-                // Generate wrong answers
-                const wrongTimes = [];
-                while (wrongTimes.length < 3) {
-                    const wrongHour = Math.floor(Math.random() * 12) + 1;
-                    const wrongMinute = [0, 30][Math.floor(Math.random() * 2)];
-                    const wrongTimeStr = wrongMinute === 0 ? `${wrongHour}:00` : `${wrongHour}:30`;
-                    const wrongDisplayTime = wrongMinute === 0 ? `${wrongHour} o'clock` : `${wrongHour}:30`;
-                    
-                    if (wrongDisplayTime !== displayTime && !wrongTimes.includes(wrongDisplayTime)) {
-                        wrongTimes.push(wrongDisplayTime);
-                    }
-                }
                 
                 return {
-                    question: `What time does this clock show?`,
+                    question: `What time does this show?`,
                     visual: { type: 'clock', hour: hour, minute: minute },
-                    correct: displayTime,
-                    options: [displayTime, ...wrongTimes].sort(() => Math.random() - 0.5),
-                    hint: `Look carefully at where the hour hand and minute hand are pointing.`
+                    correct: timeStr,
+                    options: [timeStr, `${hour + 1}:00`, `${hour}:15`, `${hour}:45`],
+                    hint: `Look at where the hour and minute hands point.`
                 };
             }
 
             generateMultiplication() {
-                const a = Math.floor(Math.random() * 5) + 2;
-                const b = Math.floor(Math.random() * 5) + 2;
+                const a = Math.floor(Math.random() * 4) + 2;
+                const b = Math.floor(Math.random() * 4) + 2;
                 const product = a * b;
+                
+                const wrongAnswers = [];
+                while (wrongAnswers.length < 3) {
+                    const wrong = product + Math.floor(Math.random() * 8) - 4;
+                    if (wrong > 0 && wrong !== product && !wrongAnswers.includes(wrong)) {
+                        wrongAnswers.push(wrong);
+                    }
+                }
                 
                 return {
                     question: `${a} × ${b} = ?`,
                     visual: { type: 'multiplication', a: a, b: b },
                     correct: product,
-                    options: [product, product + 1, product - 1, product + a].sort(() => Math.random() - 0.5),
+                    options: [product, ...wrongAnswers].sort(() => Math.random() - 0.5),
                     hint: `Think of it as ${a} groups of ${b}.`
                 };
             }
@@ -1114,7 +1193,6 @@
                 this.displayVisual();
                 this.displayAnswerOptions();
                 
-                // Read the question aloud
                 setTimeout(() => {
                     this.speak(this.currentQuestion.question, { showSpeaking: true });
                 }, 500);
@@ -1133,145 +1211,75 @@
                         for (let i = 0; i < visual.count; i++) {
                             const item = document.createElement('div');
                             item.className = `visual-item ${visual.color}`;
+                            item.style.animationDelay = `${i * 0.1}s`;
                             visualArea.appendChild(item);
                         }
                         break;
                         
                     case 'shape':
-                        const shapeContainer = document.createElement('div');
-                        shapeContainer.style.textAlign = 'center';
-                        shapeContainer.style.margin = '20px 0';
-                        
                         const shapeDiv = document.createElement('div');
-                        shapeDiv.style.fontSize = '8em';
-                        shapeDiv.style.margin = '20px';
-                        shapeDiv.style.textShadow = '0 4px 8px rgba(0,0,0,0.2)';
+                        shapeDiv.style.fontSize = '5em';
                         shapeDiv.textContent = visual.shape;
-                        
-                        const shapeLabel = document.createElement('div');
-                        shapeLabel.style.fontSize = '18px';
-                        shapeLabel.style.fontWeight = 'bold';
-                        shapeLabel.style.color = '#666';
-                        shapeLabel.style.marginTop = '10px';
-                        shapeLabel.textContent = 'What shape is this?';
-                        
-                        shapeContainer.appendChild(shapeDiv);
-                        shapeContainer.appendChild(shapeLabel);
-                        visualArea.appendChild(shapeContainer);
+                        visualArea.appendChild(shapeDiv);
                         break;
                         
                     case 'pattern':
-                        const patternContainer = document.createElement('div');
-                        patternContainer.style.textAlign = 'center';
-                        patternContainer.style.margin = '20px 0';
-                        
-                        const patternRow = document.createElement('div');
-                        patternRow.style.display = 'flex';
-                        patternRow.style.justifyContent = 'center';
-                        patternRow.style.alignItems = 'center';
-                        patternRow.style.flexWrap = 'wrap';
-                        patternRow.style.gap = '15px';
-                        patternRow.style.margin = '20px 0';
-                        
-                        visual.pattern.forEach((item, index) => {
-                            const patternItem = document.createElement('div');
-                            patternItem.style.fontSize = '3em';
-                            patternItem.style.padding = '10px';
-                            patternItem.style.borderRadius = '10px';
-                            patternItem.style.minWidth = '60px';
-                            patternItem.style.textAlign = 'center';
-                            
-                            if (item === '❓') {
-                                patternItem.style.backgroundColor = '#f0f0f0';
-                                patternItem.style.border = '3px dashed #999';
-                                patternItem.style.color = '#666';
-                            } else {
-                                patternItem.style.backgroundColor = 'rgba(255,255,255,0.8)';
-                                patternItem.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
-                            }
-                            
+                        visual.pattern.forEach((item, idx) => {
+                            const patternItem = document.createElement('span');
+                            patternItem.style.fontSize = '2.5em';
+                            patternItem.style.margin = '0 12px';
+                            patternItem.style.display = 'inline-block';
+                            patternItem.style.animation = `itemPop 0.5s ease backwards ${idx * 0.1}s`;
                             patternItem.textContent = item;
-                            patternRow.appendChild(patternItem);
+                            visualArea.appendChild(patternItem);
                         });
-                        
-                        const patternLabel = document.createElement('div');
-                        patternLabel.style.fontSize = '16px';
-                        patternLabel.style.fontWeight = 'bold';
-                        patternLabel.style.color = '#666';
-                        patternLabel.style.marginTop = '15px';
-                        patternLabel.textContent = 'What shape comes next?';
-                        
-                        patternContainer.appendChild(patternRow);
-                        patternContainer.appendChild(patternLabel);
-                        visualArea.appendChild(patternContainer);
                         break;
                         
                     case 'size':
-                        const sizeContainer = document.createElement('div');
-                        sizeContainer.style.display = 'flex';
-                        sizeContainer.style.justifyContent = 'center';
-                        sizeContainer.style.alignItems = 'center';
-                        sizeContainer.style.gap = '40px';
-                        sizeContainer.style.margin = '30px 0';
-                        
                         const bigCircle = document.createElement('div');
-                        bigCircle.style.width = '120px';
-                        bigCircle.style.height = '120px';
+                        bigCircle.style.width = '100px';
+                        bigCircle.style.height = '100px';
                         bigCircle.style.borderRadius = '50%';
-                        bigCircle.style.backgroundColor = '#4ecdc4';
-                        bigCircle.style.boxShadow = '0 8px 20px rgba(78, 205, 196, 0.3)';
-                        bigCircle.style.position = 'relative';
-                        
-                        const bigLabel = document.createElement('div');
-                        bigLabel.textContent = 'Big';
-                        bigLabel.style.position = 'absolute';
-                        bigLabel.style.bottom = '-30px';
-                        bigLabel.style.left = '50%';
-                        bigLabel.style.transform = 'translateX(-50%)';
-                        bigLabel.style.fontWeight = 'bold';
-                        bigLabel.style.color = '#333';
-                        bigCircle.appendChild(bigLabel);
+                        bigCircle.style.background = 'linear-gradient(135deg, #4ecdc4, #44a08d)';
+                        bigCircle.style.margin = '15px';
+                        bigCircle.style.display = 'inline-block';
+                        bigCircle.style.boxShadow = '0 8px 20px rgba(78, 205, 196, 0.4)';
+                        bigCircle.style.animation = 'itemPop 0.5s ease';
                         
                         const smallCircle = document.createElement('div');
-                        smallCircle.style.width = '60px';
-                        smallCircle.style.height = '60px';
+                        smallCircle.style.width = '50px';
+                        smallCircle.style.height = '50px';
                         smallCircle.style.borderRadius = '50%';
-                        smallCircle.style.backgroundColor = '#ff6b6b';
-                        smallCircle.style.boxShadow = '0 6px 15px rgba(255, 107, 107, 0.3)';
-                        smallCircle.style.position = 'relative';
+                        smallCircle.style.background = 'linear-gradient(135deg, #ff6b6b, #ee5a6f)';
+                        smallCircle.style.margin = '15px';
+                        smallCircle.style.display = 'inline-block';
+                        smallCircle.style.boxShadow = '0 8px 20px rgba(255, 107, 107, 0.4)';
+                        smallCircle.style.animation = 'itemPop 0.5s ease 0.2s backwards';
                         
-                        const smallLabel = document.createElement('div');
-                        smallLabel.textContent = 'Small';
-                        smallLabel.style.position = 'absolute';
-                        smallLabel.style.bottom = '-30px';
-                        smallLabel.style.left = '50%';
-                        smallLabel.style.transform = 'translateX(-50%)';
-                        smallLabel.style.fontWeight = 'bold';
-                        smallLabel.style.color = '#333';
-                        smallCircle.appendChild(smallLabel);
-                        
-                        sizeContainer.appendChild(bigCircle);
-                        sizeContainer.appendChild(smallCircle);
-                        visualArea.appendChild(sizeContainer);
+                        visualArea.appendChild(bigCircle);
+                        visualArea.appendChild(smallCircle);
                         break;
                         
                     case 'addition':
-                        // Show visual addition with objects
                         for (let i = 0; i < visual.a; i++) {
                             const item = document.createElement('div');
                             item.className = 'visual-item blue';
+                            item.style.animationDelay = `${i * 0.08}s`;
                             visualArea.appendChild(item);
                         }
                         
                         const plusSign = document.createElement('span');
-                        plusSign.style.fontSize = '2em';
-                        plusSign.style.margin = '0 20px';
+                        plusSign.style.fontSize = '3em';
+                        plusSign.style.margin = '0 25px';
+                        plusSign.style.fontWeight = 'bold';
+                        plusSign.style.color = '#667eea';
                         plusSign.textContent = '+';
                         visualArea.appendChild(plusSign);
                         
                         for (let i = 0; i < visual.b; i++) {
                             const item = document.createElement('div');
                             item.className = 'visual-item green';
+                            item.style.animationDelay = `${(visual.a + i) * 0.08}s`;
                             visualArea.appendChild(item);
                         }
                         break;
@@ -1280,173 +1288,163 @@
                         for (let i = 0; i < visual.start; i++) {
                             const item = document.createElement('div');
                             item.className = 'visual-item apple';
+                            item.style.animationDelay = `${i * 0.08}s`;
                             if (i >= visual.start - visual.subtract) {
-                                item.style.opacity = '0.3';
-                                item.style.textDecoration = 'line-through';
+                                item.style.opacity = '0.25';
+                                item.style.position = 'relative';
+                                item.style.overflow = 'hidden';
+                                const line = document.createElement('div');
+                                line.style.position = 'absolute';
+                                line.style.top = '50%';
+                                line.style.left = '0';
+                                line.style.width = '100%';
+                                line.style.height = '3px';
+                                line.style.background = '#333';
+                                line.style.transform = 'translateY(-50%) rotate(-45deg)';
+                                item.appendChild(line);
                             }
                             visualArea.appendChild(item);
                         }
                         break;
                         
                     case 'place_value':
+                        const pvContainer = document.createElement('div');
+                        pvContainer.style.display = 'flex';
+                        pvContainer.style.gap = '30px';
+                        pvContainer.style.justifyContent = 'center';
+                        pvContainer.style.fontSize = '1.3em';
+                        
                         const tensDiv = document.createElement('div');
-                        tensDiv.innerHTML = `<h3>Tens: ${Math.floor(visual.number / 10)}</h3>`;
+                        tensDiv.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+                        tensDiv.style.color = 'white';
+                        tensDiv.style.padding = '20px 30px';
+                        tensDiv.style.borderRadius = '15px';
+                        tensDiv.style.boxShadow = '0 8px 20px rgba(102, 126, 234, 0.3)';
+                        tensDiv.innerHTML = `<strong>Tens:</strong> ${Math.floor(visual.number / 10)}`;
+                        
                         const onesDiv = document.createElement('div');
-                        onesDiv.innerHTML = `<h3>Ones: ${visual.number % 10}</h3>`;
-                        visualArea.appendChild(tensDiv);
-                        visualArea.appendChild(onesDiv);
+                        onesDiv.style.background = 'linear-gradient(135deg, #4ecdc4, #44a08d)';
+                        onesDiv.style.color = 'white';
+                        onesDiv.style.padding = '20px 30px';
+                        onesDiv.style.borderRadius = '15px';
+                        onesDiv.style.boxShadow = '0 8px 20px rgba(78, 205, 196, 0.3)';
+                        onesDiv.innerHTML = `<strong>Ones:</strong> ${visual.number % 10}`;
+                        
+                        pvContainer.appendChild(tensDiv);
+                        pvContainer.appendChild(onesDiv);
+                        visualArea.appendChild(pvContainer);
                         break;
                         
                     case 'clock':
-                        const clockContainer = document.createElement('div');
-                        clockContainer.style.display = 'flex';
-                        clockContainer.style.flexDirection = 'column';
-                        clockContainer.style.alignItems = 'center';
-                        clockContainer.style.margin = '20px 0';
-                        
-                        const clockFace = document.createElement('div');
-                        clockFace.style.width = '200px';
-                        clockFace.style.height = '200px';
-                        clockFace.style.borderRadius = '50%';
-                        clockFace.style.border = '8px solid #333';
-                        clockFace.style.background = 'white';
-                        clockFace.style.position = 'relative';
-                        clockFace.style.margin = '20px';
-                        clockFace.style.boxShadow = '0 8px 20px rgba(0,0,0,0.2)';
-                        
-                        // Clock numbers
-                        const numbers = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-                        numbers.forEach((num, index) => {
-                            const numberDiv = document.createElement('div');
-                            numberDiv.textContent = num;
-                            numberDiv.style.position = 'absolute';
-                            numberDiv.style.fontSize = '16px';
-                            numberDiv.style.fontWeight = 'bold';
-                            numberDiv.style.color = '#333';
-                            
-                            const angle = (index * 30) - 90; // Start from 12 o'clock
-                            const radian = (angle * Math.PI) / 180;
-                            const radius = 75;
-                            const x = 92 + radius * Math.cos(radian); // 92 = (200-16)/2
-                            const y = 92 + radius * Math.sin(radian);
-                            
-                            numberDiv.style.left = `${x}px`;
-                            numberDiv.style.top = `${y}px`;
-                            numberDiv.style.transform = 'translate(-50%, -50%)';
-                            
-                            clockFace.appendChild(numberDiv);
-                        });
-                        
-                        // Hour hand
-                        const hourHand = document.createElement('div');
-                        hourHand.style.position = 'absolute';
-                        hourHand.style.width = '6px';
-                        hourHand.style.height = '50px';
-                        hourHand.style.background = '#333';
-                        hourHand.style.left = '50%';
-                        hourHand.style.top = '50%';
-                        hourHand.style.transformOrigin = '50% 100%';
-                        hourHand.style.borderRadius = '3px';
-                        
-                        // Calculate hour hand angle (30 degrees per hour + minute offset)
-                        const hourAngle = ((visual.hour % 12) * 30) + (visual.minute * 0.5) - 90;
-                        hourHand.style.transform = `translate(-50%, -100%) rotate(${hourAngle}deg)`;
-                        
-                        // Minute hand
-                        const minuteHand = document.createElement('div');
-                        minuteHand.style.position = 'absolute';
-                        minuteHand.style.width = '4px';
-                        minuteHand.style.height = '70px';
-                        minuteHand.style.background = '#ff6b6b';
-                        minuteHand.style.left = '50%';
-                        minuteHand.style.top = '50%';
-                        minuteHand.style.transformOrigin = '50% 100%';
-                        minuteHand.style.borderRadius = '2px';
-                        
-                        // Calculate minute hand angle (6 degrees per minute)
-                        const minuteAngle = (visual.minute * 6) - 90;
-                        minuteHand.style.transform = `translate(-50%, -100%) rotate(${minuteAngle}deg)`;
-                        
-                        // Center dot
-                        const centerDot = document.createElement('div');
-                        centerDot.style.position = 'absolute';
-                        centerDot.style.width = '12px';
-                        centerDot.style.height = '12px';
-                        centerDot.style.background = '#333';
-                        centerDot.style.borderRadius = '50%';
-                        centerDot.style.left = '50%';
-                        centerDot.style.top = '50%';
-                        centerDot.style.transform = 'translate(-50%, -50%)';
-                        
-                        clockFace.appendChild(hourHand);
-                        clockFace.appendChild(minuteHand);
-                        clockFace.appendChild(centerDot);
+                        const clockDiv = document.createElement('div');
+                        clockDiv.style.fontSize = '6em';
+                        clockDiv.textContent = '🕐';
+                        clockDiv.style.animation = 'itemPop 0.5s ease';
                         
                         const timeLabel = document.createElement('div');
-                        timeLabel.textContent = visual.minute === 0 ? 'What time is it?' : 'What time is it?';
-                        timeLabel.style.fontSize = '18px';
+                        timeLabel.style.fontSize = '1.3em';
+                        timeLabel.style.marginTop = '15px';
                         timeLabel.style.fontWeight = 'bold';
-                        timeLabel.style.color = '#666';
+                        timeLabel.style.color = '#667eea';
+                        timeLabel.textContent = visual.minute === 0 ? 'On the hour' : 'Half past';
                         
-                        clockContainer.appendChild(clockFace);
-                        clockContainer.appendChild(timeLabel);
-                        visualArea.appendChild(clockContainer);
+                        visualArea.appendChild(clockDiv);
+                        visualArea.appendChild(timeLabel);
                         break;
                         
                     case 'multiplication':
-                        for (let row = 0; row < visual.a; row++) {
-                            const rowDiv = document.createElement('div');
-                            rowDiv.style.display = 'flex';
-                            rowDiv.style.justifyContent = 'center';
-                            rowDiv.style.margin = '5px 0';
-                            for (let col = 0; col < visual.b; col++) {
+                        const multContainer = document.createElement('div');
+                        multContainer.style.display = 'flex';
+                        multContainer.style.justifyContent = 'center';
+                        multContainer.style.alignItems = 'center';
+                        multContainer.style.flexWrap = 'wrap';
+                        multContainer.style.gap = '20px';
+                        
+                        for (let group = 0; group < visual.a; group++) {
+                            const groupWrapper = document.createElement('div');
+                            groupWrapper.className = 'mult-group';
+                            groupWrapper.style.animationDelay = `${group * 0.2}s`;
+                            
+                            const groupCircle = document.createElement('div');
+                            groupCircle.className = 'mult-group-circle';
+                            
+                            const label = document.createElement('div');
+                            label.className = 'mult-label';
+                            label.textContent = `Group ${group + 1}`;
+                            groupCircle.appendChild(label);
+                            
+                            for (let i = 0; i < visual.b; i++) {
                                 const item = document.createElement('div');
                                 item.className = 'visual-item purple';
-                                item.style.margin = '2px';
-                                rowDiv.appendChild(item);
+                                item.style.animationDelay = `${(group * 0.2) + (i * 0.05)}s`;
+                                groupCircle.appendChild(item);
                             }
-                            visualArea.appendChild(rowDiv);
+                            
+                            groupWrapper.appendChild(groupCircle);
+                            multContainer.appendChild(groupWrapper);
                         }
+                        
+                        visualArea.appendChild(multContainer);
                         break;
                         
                     case 'division':
-                        const groupSize = visual.total / visual.groups;
+                        const divContainer = document.createElement('div');
+                        divContainer.style.display = 'flex';
+                        divContainer.style.justifyContent = 'center';
+                        divContainer.style.flexWrap = 'wrap';
+                        divContainer.style.gap = '15px';
+                        
+                        const itemsPerGroup = visual.total / visual.groups;
+                        
                         for (let g = 0; g < visual.groups; g++) {
                             const groupDiv = document.createElement('div');
-                            groupDiv.style.border = '2px dashed #666';
-                            groupDiv.style.padding = '10px';
-                            groupDiv.style.margin = '5px';
-                            groupDiv.style.display = 'inline-block';
-                            groupDiv.style.borderRadius = '10px';
+                            groupDiv.style.border = '4px dashed #ff6b6b';
+                            groupDiv.style.padding = '15px';
+                            groupDiv.style.borderRadius = '15px';
+                            groupDiv.style.display = 'flex';
+                            groupDiv.style.flexWrap = 'wrap';
+                            groupDiv.style.justifyContent = 'center';
+                            groupDiv.style.gap = '8px';
+                            groupDiv.style.background = 'rgba(255, 107, 107, 0.1)';
+                            groupDiv.style.minWidth = '100px';
+                            groupDiv.style.animation = `groupPop 0.5s ease ${g * 0.15}s backwards`;
                             
-                            for (let i = 0; i < groupSize; i++) {
+                            for (let i = 0; i < itemsPerGroup; i++) {
                                 const item = document.createElement('div');
                                 item.className = 'visual-item orange';
-                                item.style.margin = '2px';
+                                item.style.width = '35px';
+                                item.style.height = '35px';
+                                item.style.animationDelay = `${(g * 0.15) + (i * 0.05)}s`;
                                 groupDiv.appendChild(item);
                             }
-                            visualArea.appendChild(groupDiv);
+                            divContainer.appendChild(groupDiv);
                         }
+                        
+                        visualArea.appendChild(divContainer);
                         break;
                         
                     case 'fraction':
                         const fractionDiv = document.createElement('div');
                         fractionDiv.style.display = 'grid';
                         fractionDiv.style.gridTemplateColumns = `repeat(${visual.denominator}, 1fr)`;
-                        fractionDiv.style.gap = '5px';
-                        fractionDiv.style.width = '200px';
+                        fractionDiv.style.gap = '8px';
+                        fractionDiv.style.width = '260px';
                         fractionDiv.style.margin = '0 auto';
                         
                         for (let i = 0; i < visual.denominator; i++) {
                             const part = document.createElement('div');
-                            part.style.width = '40px';
-                            part.style.height = '40px';
-                            part.style.border = '2px solid #333';
-                            part.style.borderRadius = '5px';
+                            part.style.width = '60px';
+                            part.style.height = '60px';
+                            part.style.border = '3px solid #333';
+                            part.style.borderRadius = '10px';
+                            part.style.transition = 'all 0.3s ease';
+                            part.style.animation = `itemPop 0.5s ease ${i * 0.1}s backwards`;
+                            
                             if (i < visual.numerator) {
-                                part.style.backgroundColor = '#4ecdc4';
+                                part.style.background = 'linear-gradient(135deg, #4ecdc4, #44a08d)';
+                                part.style.boxShadow = '0 5px 15px rgba(78, 205, 196, 0.3)';
                             } else {
-                                part.style.backgroundColor = '#f0f0f0';
+                                part.style.backgroundColor = '#f5f5f5';
                             }
                             fractionDiv.appendChild(part);
                         }
@@ -1455,26 +1453,53 @@
                         
                     case 'measurement':
                         const ruler = document.createElement('div');
-                        ruler.style.width = '300px';
-                        ruler.style.height = '40px';
-                        ruler.style.background = 'linear-gradient(to right, #fff 0px, #fff 10px, #000 10px, #000 11px, #fff 11px)';
-                        ruler.style.backgroundSize = '20px 100%';
-                        ruler.style.border = '2px solid #333';
+                        ruler.style.width = '350px';
+                        ruler.style.height = '50px';
+                        ruler.style.background = '#fff';
+                        ruler.style.border = '3px solid #333';
                         ruler.style.position = 'relative';
+                        ruler.style.borderRadius = '5px';
+                        ruler.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+                        
+                        for (let i = 0; i <= visual.length; i++) {
+                            const mark = document.createElement('div');
+                            mark.style.position = 'absolute';
+                            mark.style.left = `${(i / visual.length) * 100}%`;
+                            mark.style.top = '0';
+                            mark.style.width = '2px';
+                            mark.style.height = i % 5 === 0 ? '25px' : '15px';
+                            mark.style.background = '#333';
+                            ruler.appendChild(mark);
+                            
+                            if (i % 1 === 0) {
+                                const num = document.createElement('div');
+                                num.style.position = 'absolute';
+                                num.style.left = `${(i / visual.length) * 100}%`;
+                                num.style.top = '30px';
+                                num.style.transform = 'translateX(-50%)';
+                                num.style.fontSize = '12px';
+                                num.style.fontWeight = 'bold';
+                                num.textContent = i;
+                                ruler.appendChild(num);
+                            }
+                        }
                         
                         const item = document.createElement('div');
-                        item.textContent = visual.item;
                         item.style.position = 'absolute';
-                        item.style.top = '-30px';
+                        item.style.top = '-40px';
                         item.style.left = '0';
-                        item.style.width = `${visual.length * 20}px`;
-                        item.style.height = '20px';
-                        item.style.backgroundColor = '#ff6b6b';
-                        item.style.textAlign = 'center';
-                        item.style.borderRadius = '5px';
+                        item.style.width = `${(visual.length / 12) * 350}px`;
+                        item.style.height = '30px';
+                        item.style.background = 'linear-gradient(135deg, #ff6b6b, #ee5a6f)';
+                        item.style.borderRadius = '8px';
+                        item.style.display = 'flex';
+                        item.style.alignItems = 'center';
+                        item.style.justifyContent = 'center';
                         item.style.color = 'white';
-                        item.style.fontSize = '12px';
-                        item.style.lineHeight = '20px';
+                        item.style.fontWeight = 'bold';
+                        item.style.fontSize = '14px';
+                        item.style.boxShadow = '0 5px 15px rgba(255, 107, 107, 0.4)';
+                        item.textContent = visual.item;
                         
                         ruler.appendChild(item);
                         visualArea.appendChild(ruler);
@@ -1486,41 +1511,24 @@
                 const optionsContainer = document.getElementById('answerOptions');
                 optionsContainer.innerHTML = '';
                 
-                this.currentQuestion.options.forEach((option, index) => {
+                this.currentQuestion.options.forEach((option, idx) => {
                     const button = document.createElement('button');
                     button.className = 'answer-btn';
+                    button.style.animationDelay = `${idx * 0.1}s`;
+                    button.style.animation = 'itemPop 0.5s ease backwards';
                     button.textContent = option;
-                    button.type = 'button'; // Ensure it's a proper button
-                    button.setAttribute('data-option', option);
-                    button.setAttribute('data-index', index);
-                    
-                    // Add click event listener
-                    button.addEventListener('click', (event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
+                    button.addEventListener('click', () => {
                         this.checkAnswer(option, button);
                     });
-                    
-                    // Also add touch event for mobile
-                    button.addEventListener('touchend', (event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        this.checkAnswer(option, button);
-                    });
-                    
                     optionsContainer.appendChild(button);
                 });
             }
 
             checkAnswer(selectedAnswer, buttonElement) {
-                console.log('Answer clicked:', selectedAnswer); // Debug log
-                
                 const isCorrect = selectedAnswer === this.currentQuestion.correct;
                 
-                // Disable all buttons immediately to prevent double clicks
                 document.querySelectorAll('.answer-btn').forEach(btn => {
                     btn.disabled = true;
-                    btn.style.pointerEvents = 'none';
                 });
                 
                 if (isCorrect) {
@@ -1529,7 +1537,6 @@
                     this.streak++;
                     this.questionsCorrect++;
                     
-                    // Encouraging voice feedback
                     const encouragingPhrases = [
                         "Great job! That's correct!",
                         "Excellent work! You got it right!",
@@ -1544,7 +1551,6 @@
                     const phrase = encouragingPhrases[Math.floor(Math.random() * encouragingPhrases.length)];
                     this.showFeedback(true, `${phrase} 🌟`);
                     
-                    // Add special streak feedback
                     if (this.streak >= 3) {
                         setTimeout(() => {
                             this.speak(`Amazing! You're on a streak of ${this.streak} correct answers!`, { 
@@ -1566,14 +1572,12 @@
                     buttonElement.classList.add('incorrect');
                     this.streak = 0;
                     
-                    // Highlight correct answer
                     document.querySelectorAll('.answer-btn').forEach(btn => {
-                        if (btn.textContent === this.currentQuestion.correct) {
+                        if (btn.textContent == this.currentQuestion.correct) {
                             btn.classList.add('correct');
                         }
                     });
                     
-                    // Gentle, encouraging feedback for wrong answers
                     const encouragingCorrection = [
                         `Not quite! The correct answer is ${this.currentQuestion.correct}. You'll get it next time!`,
                         `Close! The right answer is ${this.currentQuestion.correct}. Keep trying!`,
@@ -1587,7 +1591,7 @@
                     
                     setTimeout(() => {
                         this.speak(feedback, { 
-                            rate: this.speechRate * 0.9, // Slightly slower for corrections
+                            rate: this.speechRate * 0.9,
                             showSpeaking: true 
                         });
                     }, 300);
@@ -1607,25 +1611,16 @@
             clearFeedback() {
                 document.getElementById('feedback').style.display = 'none';
                 
-                // Re-enable buttons and clear classes
                 document.querySelectorAll('.answer-btn').forEach(btn => {
                     btn.disabled = false;
-                    btn.style.pointerEvents = 'auto';
                     btn.classList.remove('correct', 'incorrect');
                 });
-                
-                // Remove any existing restart button from previous game
-                const existingRestartBtn = document.querySelector('.controls .control-btn:last-child');
-                if (existingRestartBtn && existingRestartBtn.textContent.includes('Play Again')) {
-                    existingRestartBtn.remove();
-                }
             }
 
             showHint() {
                 if (this.currentQuestion.hint) {
                     this.showFeedback(false, `💡 Hint: ${this.currentQuestion.hint}`);
                     
-                    // Read hint aloud
                     setTimeout(() => {
                         this.speak(`Here's a hint: ${this.currentQuestion.hint}`, { 
                             rate: this.speechRate * 0.9,
@@ -1647,19 +1642,18 @@
             celebrate() {
                 const celebration = document.getElementById('celebration');
                 
-                // Create confetti
-                for (let i = 0; i < 20; i++) {
+                for (let i = 0; i < 30; i++) {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
                     confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.backgroundColor = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7'][Math.floor(Math.random() * 5)];
-                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    confetti.style.backgroundColor = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#ff8e53', '#ab47bc'][Math.floor(Math.random() * 7)];
+                    confetti.style.animationDelay = Math.random() * 1 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
                     celebration.appendChild(confetti);
                     
-                    // Remove confetti after animation
                     setTimeout(() => {
                         confetti.remove();
-                    }, 3000);
+                    }, 4000);
                 }
             }
 
@@ -1688,27 +1682,34 @@
                 }
                 
                 document.getElementById('questionDisplay').innerHTML = `
-                    <h2>Game Complete! ${emoji}</h2>
-                    <p>${message}</p>
-                    <p>You got ${this.questionsCorrect} out of ${this.totalQuestions} questions correct!</p>
-                    <p>Final Score: ${this.score}</p>
+                    <div style="animation: itemPop 0.6s ease;">
+                        <h2 style="margin-bottom: 15px;">Game Complete! ${emoji}</h2>
+                        <p style="font-size: 0.7em; margin-bottom: 10px;">${message}</p>
+                        <p style="font-size: 0.6em; margin-bottom: 8px;">You got ${this.questionsCorrect} out of ${this.totalQuestions} questions correct!</p>
+                        <p style="font-size: 0.65em;">Final Score: ${this.score}</p>
+                    </div>
                 `;
                 
                 document.getElementById('visualArea').innerHTML = '';
                 document.getElementById('answerOptions').innerHTML = '';
                 document.getElementById('nextBtn').style.display = 'none';
                 
-                // Add restart button
+                const controlsDiv = document.querySelector('.controls');
+                const existingRestartBtn = controlsDiv.querySelector('.restart-btn');
+                if (existingRestartBtn) {
+                    existingRestartBtn.remove();
+                }
+                
                 const restartBtn = document.createElement('button');
-                restartBtn.className = 'control-btn';
+                restartBtn.className = 'control-btn restart-btn';
                 restartBtn.textContent = '🔄 Play Again';
                 restartBtn.addEventListener('click', () => {
+                    restartBtn.remove();
                     this.selectTopic(this.currentTopic);
                 });
                 
-                document.querySelector('.controls').appendChild(restartBtn);
+                controlsDiv.appendChild(restartBtn);
                 
-                // Celebratory voice message
                 setTimeout(() => {
                     this.speak(voiceMessage, { 
                         pitch: 1.2, 
@@ -1717,12 +1718,13 @@
                 }, 1000);
                 
                 if (percentage >= 80) {
-                    this.celebrate();
+                    setTimeout(() => {
+                        this.celebrate();
+                    }, 500);
                 }
             }
         }
 
-        // Initialize the app when the page loads
         document.addEventListener('DOMContentLoaded', () => {
             new MathQuestApp();
         });
