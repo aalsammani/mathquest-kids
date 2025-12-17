@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathQuest Kids - Learn Math K-3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-pink: #FF6B9D;
+            --primary-purple: #9B59B6;
+            --primary-blue: #5DADE2;
+            --primary-green: #58D68D;
+            --primary-orange: #F5B041;
+            --primary-yellow: #F7DC6F;
+            --bg-gradient-1: #667eea;
+            --bg-gradient-2: #764ba2;
+            --card-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            --button-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        body {
+            font-family: 'Nunito', 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Animated background stars */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 230px 80px, #fff, transparent),
+                radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 350px 200px, #fff, transparent),
+                radial-gradient(2px 2px at 400px 50px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 500px 180px, #fff, transparent),
+                radial-gradient(2px 2px at 550px 100px, rgba(255,255,255,0.9), transparent);
+            background-size: 600px 250px;
+            animation: twinkle 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .app-container {
+            background: linear-gradient(180deg, #ffffff 0%, #f8f9ff 100%);
+            border-radius: 30px;
+            box-shadow: var(--card-shadow), 0 0 100px rgba(102, 126, 234, 0.3);
+            width: 95%;
+            max-width: 900px;
+            min-height: 650px;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            border: 4px solid rgba(255,255,255,0.3);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FF6B9D 0%, #FF8E53 25%, #F7DC6F 50%, #58D68D 75%, #5DADE2 100%);
+            background-size: 400% 400%;
+            animation: rainbowGradient 8s ease infinite;
+            padding: 25px 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes rainbowGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translate(-30%, -30%) rotate(0deg); }
+            50% { transform: translate(30%, 30%) rotate(180deg); }
+        }
+
+        .header h1 {
+            font-family: 'Fredoka', cursive;
+            font-size: 2.8em;
+            margin-bottom: 5px;
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.2), 6px 6px 0px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+            letter-spacing: 2px;
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            font-weight: 600;
+        }
+
+        .header .author-name {
+            font-size: 0.9em;
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
+            margin-top: 5px;
+        }
+
+        /* Mascot */
+        .mascot {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 4em;
+            animation: bounce 2s ease-in-out infinite;
+            filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.2));
+            z-index: 2;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-60%) scale(1.1); }
+        }
+
+        /* Grade Selection */
+        .grade-selector {
+            padding: 30px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, #f8f9ff 0%, #eef2ff 100%);
+        }
+
+        .grade-selector h2 {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.8em;
+            color: #5D6D7E;
+            margin-bottom: 25px;
+        }
+
+        .grade-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .grade-btn {
+            background: linear-gradient(145deg, #FF6B9D, #FF8E53);
+            color: white;
+            border: none;
+            padding: 20px 35px;
+            border-radius: 20px;
+            font-family: 'Fredoka', cursive;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4), inset 0 -4px 0 rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grade-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .grade-btn:hover::before {
+            left: 100%;
+        }
+
+        .grade-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 107, 157, 0.5);
+        }
+
+        .grade-btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .grade-btn.active {
+            background: linear-gradient(145deg, #58D68D, #2ECC71);
+            box-shadow: 0 8px 25px rgba(88, 214, 141, 0.5);
+        }
+
+        .grade-btn:nth-child(2) { background: linear-gradient(145deg, #5DADE2, #3498DB); box-shadow: 0 8px 25px rgba(93, 173, 226, 0.4); }
+        .grade-btn:nth-child(3) { background: linear-gradient(145deg, #9B59B6, #8E44AD); box-shadow: 0 8px 25px rgba(155, 89, 182, 0.4); }
+        .grade-btn:nth-child(4) { background: linear-gradient(145deg, #F5B041, #F39C12); box-shadow: 0 8px 25px rgba(245, 176, 65, 0.4); }
+
+        /* Topic Selection */
+        .topic-selector {
+            padding: 25px;
+            display: none;
+            background: linear-gradient(180deg, #f0f4ff 0%, #e8edff 100%);
+        }
+
+        .topic-selector h2 {
+            font-family: 'Fredoka', cursive;
+            text-align: center;
+            color: #5D6D7E;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .topic-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-pink), var(--primary-orange), var(--primary-yellow));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .topic-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: var(--primary-pink);
+        }
+
+        .topic-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            display: block;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .topic-card h3 {
+            font-family: 'Fredoka', cursive;
+            color: #34495E;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+        }
+
+        .topic-card p {
+            color: #7F8C8D;
+            font-size: 0.9em;
+        }
+
+        /* Game Area */
+        .game-area {
+            padding: 25px;
+            display: none;
+            text-align: center;
+            min-height: 450px;
+            background: linear-gradient(180deg, #ffffff 0%, #f5f7ff 100%);
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .score-display {
+            background: linear-gradient(145deg, #F7DC6F, #F5B041);
+            color: #7D6608;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-family: 'Fredoka', cursive;
+            font-size: 1.1em;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(247, 220, 111, 0.4), inset 0 -3px 0 rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .score-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stars-display {
+            display: flex;
+            gap: 3px;
+        }
+
+        .star {
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+
+        .star.earned {
+            animation: starPop 0.5s ease;
+        }
+
+        @keyframes starPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1); }
+        }
+
+        .voice-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .voice-btn {
+            background: linear-gradient(145deg, #5DADE2, #3498DB);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(93, 173, 226, 0.3);
+        }
+
+        .voice-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(93, 173, 226, 0.4);
+        }
+
+        .voice-btn.muted {
+            background: linear-gradient(145deg, #95A5A6, #7F8C8D);
+        }
+
+        .progress-container {
+            margin: 15px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #7F8C8D;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            background: #E8E8E8;
+            height: 16px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #58D68D, #2ECC71, #58D68D);
+            background-size: 200% 100%;
+            animation: progressShine 2s ease infinite;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmerProgress 2s ease infinite;
+        }
+
+        @keyframes progressShine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        @keyframes shimmerProgress {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .question-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 25px;
+            margin: 20px 0;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+        }
+
+        .question-type-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            display: inline-block;
+            margin-bottom: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .question-display {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.8em;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+            line-height: 1.4;
+        }
+
+        .word-problem-story {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.1em;
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            text-align: left;
+            line-height: 1.6;
+            backdrop-filter: blur(5px);
+        }
+
+        .word-problem-question {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.4em;
+            margin-top: 15px;
+        }
+
+        .visual-area {
+            margin: 25px 0;
+            min-height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 15px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 20px;
+        }
+
+        .visual-item {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            font-size: 1.8em;
+        }
+
+        .visual-item.pop-in {
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
+
+        .visual-item.crossed {
+            opacity: 0.3;
+            text-decoration: line-through;
+            transform: scale(0.8);
+        }
+
+        /* Clock Styles */
+        .clock-face {
+            width: 150px;
+            height: 150px;
+            border: 8px solid #34495E;
+            border-radius: 50%;
+            position: relative;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2), inset 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        .clock-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background: #E74C3C;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .clock-hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            border-radius: 5px;
+        }
+
+        .hour-hand {
+            width: 6px;
+            height: 40px;
+            background: #2C3E50;
+            margin-left: -3px;
+        }
+
+        .minute-hand {
+            width: 4px;
+            height: 55px;
+            background: #3498DB;
+            margin-left: -2px;
+        }
+
+        .clock-number {
+            position: absolute;
+            font-family: 'Fredoka', cursive;
+            font-weight: 600;
+            font-size: 0.9em;
+            color: #34495E;
+        }
+
+        /* Answer Options */
+        .answer-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .answer-btn {
+            background: linear-gradient(145deg, #58D68D, #2ECC71);
+            color: white;
+            border: none;
+            padding: 20px 15px;
+            border-radius: 18px;
+            font-family: 'Fredoka', cursive;
+            font-size: 1.4em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(88, 214, 141, 0.3), inset 0 -4px 0 rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .answer-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .answer-btn:hover:not(:disabled)::before {
+            left: 100%;
+        }
+
+        .answer-btn:hover:not(:disabled) {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(88, 214, 141, 0.4);
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .answer-btn.correct {
+            background: linear-gradient(145deg, #2ECC71, #27AE60) !important;
+            animation: correctPulse 0.6s ease;
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.6);
+        }
+
+        .answer-btn.incorrect {
+            background: linear-gradient(145deg, #E74C3C, #C0392B) !important;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 20px 25px;
+            border-radius: 18px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            display: none;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #D5F5E3, #ABEBC6);
+            color: #1E8449;
+            border-left: 5px solid #27AE60;
+        }
+
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #FADBD8, #F5B7B1);
+            color: #922B21;
+            border-left: 5px solid #E74C3C;
+        }
+
+        .feedback.hint {
+            background: linear-gradient(135deg, #FEF9E7, #FCF3CF);
+            color: #9A7D0A;
+            border-left: 5px solid #F1C40F;
+        }
+
+        .controls {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: linear-gradient(145deg, #9B59B6, #8E44AD);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 25px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(155, 89, 182, 0.3);
+        }
+
+        .control-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(155, 89, 182, 0.4);
+        }
+
+        .control-btn.primary {
+            background: linear-gradient(145deg, #3498DB, #2980B9);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .control-btn.secondary {
+            background: linear-gradient(145deg, #95A5A6, #7F8C8D);
+            box-shadow: 0 6px 20px rgba(149, 165, 166, 0.3);
+        }
+
+        /* Celebration */
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            animation: confettiFall 3s linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { 
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* End Game Screen */
+        .end-game {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .end-game h2 {
+            font-family: 'Fredoka', cursive;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #FF6B9D, #F5B041, #58D68D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .final-score {
+            font-size: 1.3em;
+            color: #5D6D7E;
+            margin: 15px 0;
+        }
+
+        .achievement-badge {
+            display: inline-block;
+            padding: 20px 40px;
+            background: linear-gradient(145deg, #F7DC6F, #F5B041);
+            border-radius: 20px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(245, 176, 65, 0.3);
+        }
+
+        .achievement-badge .badge-icon {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .achievement-badge .badge-text {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.2em;
+            color: #7D6608;
+        }
+
+        /* Fraction Visual */
+        .fraction-visual {
+            display: grid;
+            gap: 8px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        .fraction-part {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #34495E;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .fraction-part.filled {
+            background: linear-gradient(145deg, #3498DB, #2980B9);
+        }
+
+        .fraction-part.empty {
+            background: #ECF0F1;
+        }
+
+        /* Pattern Visual */
+        .pattern-item {
+            font-size: 2.5em;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .pattern-item.unknown {
+            background: linear-gradient(145deg, #ECF0F1, #BDC3C7);
+            border-radius: 15px;
+            min-width: 60px;
+            min-height: 60px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: #7F8C8D;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Size Comparison */
+        .size-comparison {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 40px;
+            padding: 20px;
+        }
+
+        .size-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .size-item:hover {
+            background: rgba(255,255,255,0.8);
+            transform: scale(1.05);
+        }
+
+        .size-circle {
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .size-label {
+            margin-top: 10px;
+            font-family: 'Fredoka', cursive;
+            font-weight: 600;
+            color: #5D6D7E;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .app-container {
+                width: 100%;
+                border-radius: 20px;
+                min-height: auto;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .mascot {
+                display: none;
+            }
+            
+            .question-display {
+                font-size: 1.4em;
+            }
+            
+            .answer-btn {
+                padding: 15px 10px;
+                font-size: 1.2em;
+            }
+
+            .grade-btn {
+                padding: 15px 25px;
+                font-size: 1em;
+            }
+
+            .game-header {
+                flex-direction: column;
+            }
+
+            .voice-controls {
+                order: 2;
+            }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <h1>🌟 MathQuest Kids 🌟</h1>
+            <p class="subtitle">Fun Math Adventures for Grades K-3</p>
+            <p class="author-name">by Abdallah Alsammani</p>
+            <div class="mascot">🦊</div>
+        </header>
+
+        <!-- Grade Selection -->
+        <div id="gradeSelection" class="grade-selector">
+            <h2>👋 Choose Your Grade Level!</h2>
+            <div class="grade-buttons">
+                <button class="grade-btn" data-grade="k">🎈 Kindergarten</button>
+                <button class="grade-btn" data-grade="1">🚀 Grade 1</button>
+                <button class="grade-btn" data-grade="2">⭐ Grade 2</button>
+                <button class="grade-btn" data-grade="3">🏆 Grade 3</button>
+            </div>
+        </div>
+
+        <!-- Topic Selection -->
+        <div id="topicSelection" class="topic-selector">
+            <h2>🎯 Choose Your Math Adventure!</h2>
+            <div class="topic-grid" id="topicGrid"></div>
+            <div class="controls" style="margin-top: 20px;">
+                <button class="control-btn secondary" id="backToGrade">← Change Grade</button>
+            </div>
+        </div>
+
+        <!-- Game Area -->
+        <div id="gameArea" class="game-area">
+            <div class="game-header">
+                <div class="score-display" id="scoreDisplay">
+                    <div class="score-item">🏆 <span id="scoreValue">0</span></div>
+                    <div class="score-item">🔥 <span id="streakValue">0</span></div>
+                    <div class="stars-display" id="starsDisplay">
+                        <span class="star">⭐</span>
+                        <span class="star">⭐</span>
+                        <span class="star">⭐</span>
+                    </div>
+                </div>
+                <div class="voice-controls">
+                    <button class="voice-btn" id="voiceToggle">🔊 Sound On</button>
+                    <button class="voice-btn" id="repeatQuestion">🔄 Repeat</button>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Question <span id="currentQ">1</span> of <span id="totalQ">10</span></span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-type-badge" id="questionTypeBadge">Math Problem</div>
+                <div id="storyArea"></div>
+                <div class="question-display" id="questionDisplay"></div>
+            </div>
+
+            <div class="visual-area" id="visualArea"></div>
+            <div class="answer-options" id="answerOptions"></div>
+            <div class="feedback" id="feedback"></div>
+            
+            <div class="controls">
+                <button class="control-btn primary hidden" id="nextBtn">Next Question →</button>
+                <button class="control-btn" id="hintBtn">💡 Get a Hint</button>
+                <button class="control-btn secondary" id="backBtn">← Back to Topics</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="celebration" id="celebration"></div>
+
+    <script>
+        class MathQuestApp {
+            constructor() {
+                this.currentGrade = null;
+                this.currentTopic = null;
+                this.currentQuestion = null;
+                this.score = 0;
+                this.streak = 0;
+                this.questionCount = 0;
+                this.totalQuestions = 10;
+                this.questionsCorrect = 0;
+                this.hintsUsed = 0;
+                
+                // Voice settings
+                this.voiceEnabled = true;
+                this.speechSynthesis = window.speechSynthesis;
+                this.currentVoice = null;
+                this.speechRate = 0.85;
+                this.availableVoices = [];
+                
+                // Audio context for sound effects
+                this.audioContext = null;
+                this.initializeAudio();
+                
+                // Initialize voices
+                this.initializeVoices();
+                
+                // Topic definitions with word problems
+                this.topics = {
+                    k: [
+                        { id: 'counting', name: 'Counting 1-10', icon: '🔢', description: 'Count fun objects!' },
+                        { id: 'shapes', name: 'Shape Explorer', icon: '🔷', description: 'Discover cool shapes!' },
+                        { id: 'patterns', name: 'Pattern Detective', icon: '🔴🔵🔴', description: 'Find the pattern!' },
+                        { id: 'size', name: 'Big vs Small', icon: '🐘🐭', description: 'Compare sizes!' },
+                        { id: 'word_problems_k', name: 'Story Math', icon: '📖', description: 'Fun math stories!' }
+                    ],
+                    1: [
+                        { id: 'addition10', name: 'Addition to 10', icon: '➕', description: 'Add numbers together!' },
+                        { id: 'subtraction10', name: 'Subtraction to 10', icon: '➖', description: 'Take away numbers!' },
+                        { id: 'counting20', name: 'Count to 20', icon: '🔢', description: 'Count higher!' },
+                        { id: 'place_value', name: 'Tens & Ones', icon: '🔟', description: 'Learn place value!' },
+                        { id: 'word_problems_1', name: 'Story Problems', icon: '📚', description: 'Solve math stories!' }
+                    ],
+                    2: [
+                        { id: 'addition100', name: 'Addition to 100', icon: '➕', description: 'Add bigger numbers!' },
+                        { id: 'subtraction100', name: 'Subtraction to 100', icon: '➖', description: 'Subtract big numbers!' },
+                        { id: 'skip_counting', name: 'Skip Counting', icon: '⏭️', description: 'Count by 2s, 5s, 10s!' },
+                        { id: 'time', name: 'Tell Time', icon: '🕐', description: 'Read the clock!' },
+                        { id: 'word_problems_2', name: 'Math Stories', icon: '📖', description: 'Real-world math!' }
+                    ],
+                    3: [
+                        { id: 'multiplication', name: 'Multiplication', icon: '✖️', description: 'Times tables fun!' },
+                        { id: 'division', name: 'Division', icon: '➗', description: 'Share equally!' },
+                        { id: 'fractions', name: 'Fractions', icon: '🍕', description: 'Parts of a whole!' },
+                        { id: 'measurement', name: 'Measurement', icon: '📏', description: 'Measure things!' },
+                        { id: 'word_problems_3', name: 'Challenge Stories', icon: '🧩', description: 'Tricky word problems!' }
+                    ]
+                };
+
+                // Word problem templates
+                this.wordProblemTemplates = {
+                    k: [
+                        { story: "{name} has {a} {item}. {name2} gives {name} {b} more {item}.", question: "How many {item} does {name} have now?", type: 'addition' },
+                        { story: "There are {a} {item} on the table. {name} takes {b} {item} away.", question: "How many {item} are left?", type: 'subtraction' },
+                        { story: "{name} sees {a} {item} in a tree. Then {b} more {item} come!", question: "How many {item} are there in all?", type: 'addition' }
+                    ],
+                    1: [
+                        { story: "{name} has {a} {item}. {name} finds {b} more {item} at the park.", question: "How many {item} does {name} have altogether?", type: 'addition' },
+                        { story: "There are {a} {item} in a basket. {name} eats {b} of them.", question: "How many {item} are left in the basket?", type: 'subtraction' },
+                        { story: "{name} has {a} red {item} and {b} blue {item}.", question: "How many {item} does {name} have in total?", type: 'addition' },
+                        { story: "{a} {item} are playing in the yard. {b} {item} go home.", question: "How many {item} are still playing?", type: 'subtraction' }
+                    ],
+                    2: [
+                        { story: "{name} saves ${a}. Then {name} earns ${b} more by helping with chores.", question: "How much money does {name} have now?", type: 'addition' },
+                        { story: "A store has {a} {item}. They sell {b} of them.", question: "How many {item} does the store have left?", type: 'subtraction' },
+                        { story: "{name} reads {a} pages on Monday and {b} pages on Tuesday.", question: "How many pages did {name} read in all?", type: 'addition' },
+                        { story: "There are {a} students in the cafeteria. {b} students leave after lunch.", question: "How many students are still in the cafeteria?", type: 'subtraction' }
+                    ],
+                    3: [
+                        { story: "{name} has {a} bags of {item}. Each bag has {b} {item} inside.", question: "How many {item} does {name} have in total?", type: 'multiplication' },
+                        { story: "{name} wants to share {a} {item} equally among {b} friends.", question: "How many {item} will each friend get?", type: 'division' },
+                        { story: "A classroom has {a} rows of desks. Each row has {b} desks.", question: "How many desks are in the classroom?", type: 'multiplication' },
+                        { story: "{a} {item} need to be put into {b} equal groups.", question: "How many {item} will be in each group?", type: 'division' }
+                    ]
+                };
+
+                this.names = ['Emma', 'Liam', 'Olivia', 'Noah', 'Ava', 'James', 'Sophia', 'Lucas', 'Mia', 'Ethan', 'Isabella', 'Mason'];
+                this.items = {
+                    countable: ['apples', 'bananas', 'cookies', 'stars', 'stickers', 'toys', 'books', 'crayons', 'flowers', 'balloons', 'cupcakes', 'pencils'],
+                    animals: ['birds', 'butterflies', 'puppies', 'kittens', 'bunnies', 'fish', 'ducks', 'frogs'],
+                    emoji: ['🍎', '🍌', '🍪', '⭐', '🎈', '📚', '🖍️', '🌸', '🦋', '🐶', '🐱', '🐰']
+                };
+                
+                this.initializeApp();
+            }
+
+            initializeAudio() {
+                try {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (e) {
+                    console.log('Web Audio API not supported');
+                }
+            }
+
+            playSound(type) {
+                if (!this.audioContext || !this.voiceEnabled) return;
+                
+                const oscillator = this.audioContext.createOscillator();
+                const gainNode = this.audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(this.audioContext.destination);
+                
+                switch(type) {
+                    case 'correct':
+                        oscillator.frequency.setValueAtTime(523.25, this.audioContext.currentTime); // C5
+                        oscillator.frequency.setValueAtTime(659.25, this.audioContext.currentTime + 0.1); // E5
+                        oscillator.frequency.setValueAtTime(783.99, this.audioContext.currentTime + 0.2); // G5
+                        gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
+                        gainNode.gain.exponentialDecayTo = 0.01;
+                        oscillator.start(this.audioContext.currentTime);
+                        oscillator.stop(this.audioContext.currentTime + 0.4);
+                        break;
+                    case 'incorrect':
+                        oscillator.frequency.setValueAtTime(200, this.audioContext.currentTime);
+                        oscillator.frequency.setValueAtTime(150, this.audioContext.currentTime + 0.15);
+                        gainNode.gain.setValueAtTime(0.2, this.audioContext.currentTime);
+                        oscillator.start(this.audioContext.currentTime);
+                        oscillator.stop(this.audioContext.currentTime + 0.3);
+                        break;
+                    case 'click':
+                        oscillator.frequency.setValueAtTime(800, this.audioContext.currentTime);
+                        gainNode.gain.setValueAtTime(0.1, this.audioContext.currentTime);
+                        oscillator.start(this.audioContext.currentTime);
+                        oscillator.stop(this.audioContext.currentTime + 0.05);
+                        break;
+                }
+            }
+
+            initializeApp() {
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                // Grade selection
+                document.querySelectorAll('.grade-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.playSound('click');
+                        this.selectGrade(e.target.dataset.grade);
+                    });
+                });
+
+                // Back to grade selection
+                document.getElementById('backToGrade').addEventListener('click', () => {
+                    this.playSound('click');
+                    document.getElementById('topicSelection').style.display = 'none';
+                    document.getElementById('gradeSelection').style.display = 'block';
+                });
+
+                // Control buttons
+                document.getElementById('backBtn').addEventListener('click', () => {
+                    this.playSound('click');
+                    this.showTopicSelection();
+                });
+
+                document.getElementById('nextBtn').addEventListener('click', () => {
+                    this.playSound('click');
+                    this.nextQuestion();
+                });
+
+                document.getElementById('hintBtn').addEventListener('click', () => {
+                    this.playSound('click');
+                    this.showHint();
+                });
+
+                // Voice controls
+                document.getElementById('voiceToggle').addEventListener('click', () => {
+                    this.toggleVoice();
+                });
+
+                document.getElementById('repeatQuestion').addEventListener('click', () => {
+                    this.repeatCurrentQuestion();
+                });
+            }
+
+            initializeVoices() {
+                const loadVoices = () => {
+                    this.availableVoices = this.speechSynthesis.getVoices();
+                    
+                    const preferredVoices = ['Samantha', 'Google UK English Female', 'Microsoft Zira', 'Karen', 'Moira'];
+                    
+                    for (let preferred of preferredVoices) {
+                        const voice = this.availableVoices.find(v => 
+                            v.name.includes(preferred) || v.name.toLowerCase().includes('female')
+                        );
+                        if (voice) {
+                            this.currentVoice = voice;
+                            break;
+                        }
+                    }
+                    
+                    if (!this.currentVoice) {
+                        this.currentVoice = this.availableVoices.find(v => v.lang.startsWith('en')) || this.availableVoices[0];
+                    }
+                };
+
+                loadVoices();
+                this.speechSynthesis.addEventListener('voiceschanged', loadVoices);
+            }
+
+            speak(text, options = {}) {
+                if (!this.voiceEnabled || !this.speechSynthesis) return;
+                
+                this.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.voice = this.currentVoice;
+                utterance.rate = options.rate || this.speechRate;
+                utterance.pitch = options.pitch || 1.1;
+                utterance.volume = options.volume || 0.8;
+                
+                this.speechSynthesis.speak(utterance);
+                return utterance;
+            }
+
+            toggleVoice() {
+                this.voiceEnabled = !this.voiceEnabled;
+                const btn = document.getElementById('voiceToggle');
+                
+                if (this.voiceEnabled) {
+                    btn.textContent = '🔊 Sound On';
+                    btn.classList.remove('muted');
+                    this.speak("Sound is on!");
+                } else {
+                    btn.textContent = '🔇 Sound Off';
+                    btn.classList.add('muted');
+                    this.speechSynthesis.cancel();
+                }
+            }
+
+            repeatCurrentQuestion() {
+                if (this.currentQuestion) {
+                    const text = this.currentQuestion.story 
+                        ? this.currentQuestion.story + ' ' + this.currentQuestion.question
+                        : this.currentQuestion.question;
+                    this.speak(text);
+                }
+            }
+
+            selectGrade(grade) {
+                this.currentGrade = grade;
+                
+                document.querySelectorAll('.grade-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-grade="${grade}"]`).classList.add('active');
+                
+                const gradeNames = { k: 'Kindergarten', 1: 'Grade 1', 2: 'Grade 2', 3: 'Grade 3' };
+                this.speak(`Great choice! Welcome to ${gradeNames[grade]}!`);
+                
+                this.showTopicSelection();
+            }
+
+            showTopicSelection() {
+                document.getElementById('gradeSelection').style.display = 'none';
+                document.getElementById('gameArea').style.display = 'none';
+                document.getElementById('topicSelection').style.display = 'block';
+                
+                this.populateTopics();
+            }
+
+            populateTopics() {
+                const topicGrid = document.getElementById('topicGrid');
+                topicGrid.innerHTML = '';
+                
+                this.topics[this.currentGrade].forEach((topic, index) => {
+                    const topicCard = document.createElement('div');
+                    topicCard.className = 'topic-card';
+                    topicCard.style.animationDelay = `${index * 0.1}s`;
+                    topicCard.innerHTML = `
+                        <span class="topic-icon">${topic.icon}</span>
+                        <h3>${topic.name}</h3>
+                        <p>${topic.description}</p>
+                    `;
+                    topicCard.addEventListener('click', () => {
+                        this.playSound('click');
+                        this.selectTopic(topic.id);
+                    });
+                    topicGrid.appendChild(topicCard);
+                });
+            }
+
+            selectTopic(topicId) {
+                this.currentTopic = topicId;
+                this.score = 0;
+                this.streak = 0;
+                this.questionCount = 0;
+                this.questionsCorrect = 0;
+                this.hintsUsed = 0;
+                
+                document.getElementById('topicSelection').style.display = 'none';
+                document.getElementById('gameArea').style.display = 'block';
+                
+                this.startGame();
+            }
+
+            startGame() {
+                this.updateScore();
+                this.updateStars();
+                
+                const topicName = this.getTopicName();
+                setTimeout(() => {
+                    this.speak(`Let's practice ${topicName}! You can do this!`);
+                }, 500);
+                
+                this.nextQuestion();
+            }
+
+            getTopicName() {
+                const names = {
+                    counting: 'counting', shapes: 'shapes', patterns: 'patterns', size: 'comparing sizes',
+                    addition10: 'addition', subtraction10: 'subtraction', counting20: 'counting to twenty',
+                    place_value: 'place value', addition100: 'addition', subtraction100: 'subtraction',
+                    skip_counting: 'skip counting', time: 'telling time', multiplication: 'multiplication',
+                    division: 'division', fractions: 'fractions', measurement: 'measurement',
+                    word_problems_k: 'story math', word_problems_1: 'story problems',
+                    word_problems_2: 'math stories', word_problems_3: 'challenge problems'
+                };
+                return names[this.currentTopic] || 'math';
+            }
+
+            nextQuestion() {
+                if (this.questionCount >= this.totalQuestions) {
+                    this.endGame();
+                    return;
+                }
+
+                this.questionCount++;
+                this.clearFeedback();
+                document.getElementById('nextBtn').classList.add('hidden');
+                document.getElementById('hintBtn').classList.remove('hidden');
+                
+                this.currentQuestion = this.generateQuestion();
+                this.displayQuestion();
+                this.updateProgress();
+            }
+
+            generateQuestion() {
+                const generators = {
+                    counting: () => this.generateCounting(),
+                    shapes: () => this.generateShapes(),
+                    patterns: () => this.generatePatterns(),
+                    size: () => this.generateSize(),
+                    addition10: () => this.generateAddition(10),
+                    subtraction10: () => this.generateSubtraction(10),
+                    counting20: () => this.generateCountingHigher(),
+                    place_value: () => this.generatePlaceValue(),
+                    addition100: () => this.generateAddition(100),
+                    subtraction100: () => this.generateSubtraction(100),
+                    skip_counting: () => this.generateSkipCounting(),
+                    time: () => this.generateTime(),
+                    multiplication: () => this.generateMultiplication(),
+                    division: () => this.generateDivision(),
+                    fractions: () => this.generateFractions(),
+                    measurement: () => this.generateMeasurement(),
+                    word_problems_k: () => this.generateWordProblem('k'),
+                    word_problems_1: () => this.generateWordProblem('1'),
+                    word_problems_2: () => this.generateWordProblem('2'),
+                    word_problems_3: () => this.generateWordProblem('3')
+                };
+
+                return generators[this.currentTopic]();
+            }
+
+            generateWordProblem(grade) {
+                const templates = this.wordProblemTemplates[grade];
+                const template = templates[Math.floor(Math.random() * templates.length)];
+                
+                const name = this.names[Math.floor(Math.random() * this.names.length)];
+                const name2 = this.names.filter(n => n !== name)[Math.floor(Math.random() * (this.names.length - 1))];
+                const itemIndex = Math.floor(Math.random() * this.items.countable.length);
+                const item = this.items.countable[itemIndex];
+                const emoji = this.items.emoji[itemIndex];
+                
+                let a, b, correct;
+                
+                switch(template.type) {
+                    case 'addition':
+                        if (grade === 'k') {
+                            a = Math.floor(Math.random() * 5) + 1;
+                            b = Math.floor(Math.random() * 5) + 1;
+                        } else if (grade === '1') {
+                            a = Math.floor(Math.random() * 8) + 2;
+                            b = Math.floor(Math.random() * (10 - a)) + 1;
+                        } else {
+                            a = Math.floor(Math.random() * 40) + 10;
+                            b = Math.floor(Math.random() * 40) + 10;
+                        }
+                        correct = a + b;
+                        break;
+                    case 'subtraction':
+                        if (grade === 'k') {
+                            a = Math.floor(Math.random() * 5) + 4;
+                            b = Math.floor(Math.random() * (a - 1)) + 1;
+                        } else if (grade === '1') {
+                            a = Math.floor(Math.random() * 8) + 3;
+                            b = Math.floor(Math.random() * (a - 1)) + 1;
+                        } else {
+                            a = Math.floor(Math.random() * 40) + 30;
+                            b = Math.floor(Math.random() * 25) + 5;
+                        }
+                        correct = a - b;
+                        break;
+                    case 'multiplication':
+                        a = Math.floor(Math.random() * 5) + 2;
+                        b = Math.floor(Math.random() * 5) + 2;
+                        correct = a * b;
+                        break;
+                    case 'division':
+                        b = Math.floor(Math.random() * 4) + 2;
+                        correct = Math.floor(Math.random() * 5) + 2;
+                        a = b * correct;
+                        break;
+                }
+                
+                const story = template.story
+                    .replace(/{name}/g, name)
+                    .replace(/{name2}/g, name2)
+                    .replace(/{a}/g, a)
+                    .replace(/{b}/g, b)
+                    .replace(/{item}/g, item);
+                    
+                const question = template.question
+                    .replace(/{name}/g, name)
+                    .replace(/{item}/g, item);
+                
+                const wrongAnswers = this.generateWrongAnswers(correct, 3, template.type === 'division' ? 1 : (grade === 'k' || grade === '1' ? 1 : 5));
+                
+                return {
+                    type: 'word_problem',
+                    story: story,
+                    question: question,
+                    visual: { type: 'story', emoji: emoji, a: a, b: b, operation: template.type },
+                    correct: correct,
+                    options: [correct, ...wrongAnswers].sort(() => Math.random() - 0.5),
+                    hint: this.getOperationHint(template.type, a, b)
+                };
+            }
+
+            getOperationHint(operation, a, b) {
+                switch(operation) {
+                    case 'addition':
+                        return `Try adding ${a} + ${b}. Start with ${a} and count up ${b} more!`;
+                    case 'subtraction':
+                        return `Try ${a} - ${b}. Start with ${a} and take away ${b}!`;
+                    case 'multiplication':
+                        return `Think of ${a} groups with ${b} in each group!`;
+                    case 'division':
+                        return `Split ${a} into ${b} equal groups. How many in each?`;
+                    default:
+                        return 'Read the problem carefully and think about what to do!';
+                }
+            }
+
+            generateWrongAnswers(correct, count, spread) {
+                const wrong = [];
+                while (wrong.length < count) {
+                    const offset = Math.floor(Math.random() * spread * 2) - spread;
+                    const answer = correct + (offset === 0 ? spread : offset);
+                    if (answer > 0 && answer !== correct && !wrong.includes(answer)) {
+                        wrong.push(answer);
+                    }
+                }
+                return wrong;
+            }
+
+            generateCounting() {
+                const max = Math.floor(Math.random() * 7) + 3;
+                const emojiOptions = ['🍎', '🌟', '🎈', '🍪', '🦋', '🌸', '🐶'];
+                const emoji = emojiOptions[Math.floor(Math.random() * emojiOptions.length)];
+                
+                return {
+                    type: 'counting',
+                    question: `How many ${emoji} do you see?`,
+                    visual: { type: 'objects', count: max, emoji: emoji },
+                    correct: max,
+                    options: [max, ...this.generateWrongAnswers(max, 3, 2)].sort(() => Math.random() - 0.5),
+                    hint: `Count each ${emoji} one by one: 1, 2, 3...`
+                };
+            }
+
+            generateShapes() {
+                const shapes = [
+                    { name: 'circle', display: '⚫', description: 'round with no corners' },
+                    { name: 'square', display: '🟦', description: '4 equal sides and 4 corners' },
+                    { name: 'triangle', display: '🔺', description: '3 sides and 3 corners' },
+                    { name: 'rectangle', display: '🟩', description: '4 sides and 4 corners' },
+                    { name: 'star', display: '⭐', description: '5 points' },
+                    { name: 'heart', display: '❤️', description: 'curved with a point at bottom' }
+                ];
+                
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                const wrongShapes = shapes.filter(s => s.name !== shape.name).slice(0, 3);
+
+                return {
+                    type: 'shapes',
+                    question: `What shape is this?`,
+                    visual: { type: 'shape', display: shape.display },
+                    correct: shape.name,
+                    options: [shape.name, ...wrongShapes.map(s => s.name)].sort(() => Math.random() - 0.5),
+                    hint: `This shape is ${shape.description}.`
+                };
+            }
+
+            generatePatterns() {
+                const patterns = [
+                    { sequence: ['🔴', '🔵', '🔴', '🔵', '🔴'], next: '🔵', hint: 'Red, blue, red, blue...' },
+                    { sequence: ['⭐', '⭐', '❤️', '⭐', '⭐'], next: '❤️', hint: 'Star, star, heart repeats!' },
+                    { sequence: ['🟡', '🟢', '🟡', '🟢', '🟡'], next: '🟢', hint: 'Yellow, green, yellow, green...' },
+                    { sequence: ['🌸', '🌸', '🌺', '🌸', '🌸'], next: '🌺', hint: 'Two pink flowers, then red!' },
+                    { sequence: ['🐶', '🐱', '🐶', '🐱', '🐶'], next: '🐱', hint: 'Dog, cat, dog, cat...' }
+                ];
+                
+                const pattern = patterns[Math.floor(Math.random() * patterns.length)];
+                const options = [...new Set([...pattern.sequence, pattern.next])];
+                while (options.length < 4) {
+                    const extra = ['🔴', '🔵', '🟡', '🟢', '⭐', '❤️'][Math.floor(Math.random() * 6)];
+                    if (!options.includes(extra)) options.push(extra);
+                }
+                
+                return {
+                    type: 'patterns',
+                    question: 'What comes next in the pattern?',
+                    visual: { type: 'pattern', sequence: [...pattern.sequence, '?'] },
+                    correct: pattern.next,
+                    options: options.sort(() => Math.random() - 0.5),
+                    hint: pattern.hint
+                };
+            }
+
+            generateSize() {
+                const comparisons = [
+                    { type: 'bigger', sizes: [{ size: 100, label: 'A' }, { size: 50, label: 'B' }], correct: 'A' },
+                    { type: 'bigger', sizes: [{ size: 45, label: 'A' }, { size: 90, label: 'B' }], correct: 'B' },
+                    { type: 'smaller', sizes: [{ size: 80, label: 'A' }, { size: 40, label: 'B' }], correct: 'B' },
+                    { type: 'smaller', sizes: [{ size: 35, label: 'A' }, { size: 75, label: 'B' }], correct: 'A' }
+                ];
+                
+                const comparison = comparisons[Math.floor(Math.random() * comparisons.length)];
+                
+                return {
+                    type: 'size',
+                    question: `Which circle is ${comparison.type}?`,
+                    visual: { type: 'size', sizes: comparison.sizes },
+                    correct: comparison.correct,
+                    options: ['A', 'B'],
+                    hint: `Look carefully at both circles. Which one is ${comparison.type}?`
+                };
+            }
+
+            generateAddition(max) {
+                const limit = max === 10 ? 5 : 50;
+                const a = Math.floor(Math.random() * limit) + 1;
+                const b = Math.floor(Math.random() * Math.min(limit, max - a)) + 1;
+                const sum = a + b;
+                
+                return {
+                    type: 'addition',
+                    question: `${a} + ${b} = ?`,
+                    visual: max <= 10 ? { type: 'addition', a: a, b: b } : null,
+                    correct: sum,
+                    options: [sum, ...this.generateWrongAnswers(sum, 3, max <= 10 ? 2 : 5)].sort(() => Math.random() - 0.5),
+                    hint: `Start with ${a}, then count up ${b} more!`
+                };
+            }
+
+            generateSubtraction(max) {
+                const limit = max === 10 ? 10 : 80;
+                const start = Math.floor(Math.random() * (limit - 3)) + 4;
+                const subtract = Math.floor(Math.random() * (start - 1)) + 1;
+                const result = start - subtract;
+                
+                return {
+                    type: 'subtraction',
+                    question: `${start} - ${subtract} = ?`,
+                    visual: max <= 10 ? { type: 'subtraction', start: start, subtract: subtract } : null,
+                    correct: result,
+                    options: [result, ...this.generateWrongAnswers(result, 3, max <= 10 ? 2 : 5)].sort(() => Math.random() - 0.5),
+                    hint: `Start with ${start}, then take away ${subtract}!`
+                };
+            }
+
+            generateCountingHigher() {
+                const start = Math.floor(Math.random() * 10) + 10;
+                const target = start + Math.floor(Math.random() * 3) + 1;
+                
+                return {
+                    type: 'counting',
+                    question: `Count: ${start}, ${start + 1}, ${start + 2}... What comes next?`,
+                    visual: null,
+                    correct: start + 3,
+                    options: [start + 3, start + 2, start + 4, start + 5].sort(() => Math.random() - 0.5),
+                    hint: `Keep counting after ${start + 2}!`
+                };
+            }
+
+            generatePlaceValue() {
+                const tens = Math.floor(Math.random() * 4) + 1;
+                const ones = Math.floor(Math.random() * 9) + 1;
+                const number = tens * 10 + ones;
+                const askTens = Math.random() > 0.5;
+                
+                return {
+                    type: 'place_value',
+                    question: askTens ? `How many TENS are in ${number}?` : `How many ONES are in ${number}?`,
+                    visual: { type: 'place_value', tens: tens, ones: ones },
+                    correct: askTens ? tens : ones,
+                    options: [askTens ? tens : ones, tens, ones, number].filter((v, i, a) => a.indexOf(v) === i).sort(() => Math.random() - 0.5).slice(0, 4),
+                    hint: askTens ? `The tens digit is on the left.` : `The ones digit is on the right.`
+                };
+            }
+
+            generateSkipCounting() {
+                const skips = [2, 5, 10];
+                const skip = skips[Math.floor(Math.random() * skips.length)];
+                const startMultiple = Math.floor(Math.random() * 3) + 1;
+                const sequence = [skip * startMultiple, skip * (startMultiple + 1), skip * (startMultiple + 2)];
+                const answer = skip * (startMultiple + 3);
+                
+                return {
+                    type: 'skip_counting',
+                    question: `Skip count by ${skip}s: ${sequence.join(', ')}, ?`,
+                    visual: null,
+                    correct: answer,
+                    options: [answer, answer + skip, answer - skip, answer + 1].sort(() => Math.random() - 0.5),
+                    hint: `Add ${skip} to ${sequence[2]}!`
+                };
+            }
+
+            generateTime() {
+                const hour = Math.floor(Math.random() * 12) + 1;
+                const minutes = [0, 30][Math.floor(Math.random() * 2)];
+                const timeStr = minutes === 0 ? `${hour}:00` : `${hour}:30`;
+                
+                const wrongTimes = [];
+                wrongTimes.push(minutes === 0 ? `${hour}:30` : `${hour}:00`);
+                wrongTimes.push(`${(hour % 12) + 1}:00`);
+                wrongTimes.push(`${hour}:15`);
+                
+                return {
+                    type: 'time',
+                    question: 'What time does the clock show?',
+                    visual: { type: 'clock', hour: hour, minute: minutes },
+                    correct: timeStr,
+                    options: [timeStr, ...wrongTimes].sort(() => Math.random() - 0.5),
+                    hint: minutes === 0 ? `The minute hand points to 12 for "o'clock".` : `The minute hand points to 6 for "half past".`
+                };
+            }
+
+            generateMultiplication() {
+                const a = Math.floor(Math.random() * 6) + 2;
+                const b = Math.floor(Math.random() * 6) + 2;
+                const product = a * b;
+                
+                return {
+                    type: 'multiplication',
+                    question: `${a} × ${b} = ?`,
+                    visual: { type: 'multiplication', a: a, b: b },
+                    correct: product,
+                    options: [product, ...this.generateWrongAnswers(product, 3, 3)].sort(() => Math.random() - 0.5),
+                    hint: `Think of ${a} groups of ${b}!`
+                };
+            }
+
+            generateDivision() {
+                const divisor = Math.floor(Math.random() * 5) + 2;
+                const quotient = Math.floor(Math.random() * 6) + 2;
+                const dividend = divisor * quotient;
+                
+                return {
+                    type: 'division',
+                    question: `${dividend} ÷ ${divisor} = ?`,
+                    visual: { type: 'division', total: dividend, groups: divisor },
+                    correct: quotient,
+                    options: [quotient, ...this.generateWrongAnswers(quotient, 3, 2)].sort(() => Math.random() - 0.5),
+                    hint: `Split ${dividend} into ${divisor} equal groups!`
+                };
+            }
+
+            generateFractions() {
+                const denominator = [2, 3, 4][Math.floor(Math.random() * 3)];
+                const numerator = Math.floor(Math.random() * denominator) + 1;
+                const fraction = `${numerator}/${denominator}`;
+                
+                const wrong = [];
+                wrong.push(`${denominator}/${numerator}`);
+                wrong.push(`${Math.min(numerator + 1, denominator)}/${denominator}`);
+                wrong.push(`${numerator}/${denominator + 1}`);
+                
+                return {
+                    type: 'fractions',
+                    question: 'What fraction is colored in?',
+                    visual: { type: 'fraction', numerator: numerator, denominator: denominator },
+                    correct: fraction,
+                    options: [fraction, ...wrong.slice(0, 3)].sort(() => Math.random() - 0.5),
+                    hint: `Count the colored parts (${numerator}) out of total parts (${denominator})!`
+                };
+            }
+
+            generateMeasurement() {
+                const items = [
+                    { name: 'pencil', length: Math.floor(Math.random() * 4) + 4, unit: 'inches' },
+                    { name: 'book', length: Math.floor(Math.random() * 3) + 8, unit: 'inches' },
+                    { name: 'eraser', length: Math.floor(Math.random() * 2) + 2, unit: 'inches' }
+                ];
+                const item = items[Math.floor(Math.random() * items.length)];
+                const answer = `${item.length} ${item.unit}`;
+                
+                return {
+                    type: 'measurement',
+                    question: `How long is the ${item.name}?`,
+                    visual: { type: 'measurement', name: item.name, length: item.length },
+                    correct: answer,
+                    options: [
+                        answer,
+                        `${item.length + 1} ${item.unit}`,
+                        `${item.length - 1} ${item.unit}`,
+                        `${item.length + 2} ${item.unit}`
+                    ].sort(() => Math.random() - 0.5),
+                    hint: 'Count the marks on the ruler!'
+                };
+            }
+
+            displayQuestion() {
+                const storyArea = document.getElementById('storyArea');
+                const questionDisplay = document.getElementById('questionDisplay');
+                const badge = document.getElementById('questionTypeBadge');
+                
+                // Set question type badge
+                const badgeLabels = {
+                    counting: '🔢 Counting',
+                    shapes: '🔷 Shapes',
+                    patterns: '🎯 Patterns',
+                    size: '📏 Size',
+                    addition: '➕ Addition',
+                    subtraction: '➖ Subtraction',
+                    place_value: '🔟 Place Value',
+                    skip_counting: '⏭️ Skip Counting',
+                    time: '🕐 Time',
+                    multiplication: '✖️ Multiplication',
+                    division: '➗ Division',
+                    fractions: '🍕 Fractions',
+                    measurement: '📐 Measurement',
+                    word_problem: '📖 Story Problem'
+                };
+                badge.textContent = badgeLabels[this.currentQuestion.type] || '🧮 Math';
+                
+                // Display story for word problems
+                if (this.currentQuestion.story) {
+                    storyArea.innerHTML = `<div class="word-problem-story">${this.currentQuestion.story}</div>`;
+                    questionDisplay.innerHTML = `<div class="word-problem-question">${this.currentQuestion.question}</div>`;
+                } else {
+                    storyArea.innerHTML = '';
+                    questionDisplay.textContent = this.currentQuestion.question;
+                }
+                
+                this.displayVisual();
+                this.displayAnswerOptions();
+                
+                // Speak the question
+                setTimeout(() => {
+                    const text = this.currentQuestion.story 
+                        ? this.currentQuestion.story + ' ' + this.currentQuestion.question
+                        : this.currentQuestion.question;
+                    this.speak(text);
+                }, 300);
+            }
+
+            displayVisual() {
+                const visualArea = document.getElementById('visualArea');
+                visualArea.innerHTML = '';
+                
+                const visual = this.currentQuestion.visual;
+                if (!visual) {
+                    visualArea.style.display = 'none';
+                    return;
+                }
+                
+                visualArea.style.display = 'flex';
+                
+                switch (visual.type) {
+                    case 'objects':
+                    case 'story':
+                        const emoji = visual.emoji;
+                        for (let i = 0; i < (visual.count || visual.a + (visual.b || 0)); i++) {
+                            const item = document.createElement('span');
+                            item.className = 'visual-item pop-in';
+                            item.style.animationDelay = `${i * 0.08}s`;
+                            item.textContent = emoji;
+                            
+                            if (visual.operation === 'subtraction' && i >= visual.a - visual.b) {
+                                item.classList.add('crossed');
+                            }
+                            visualArea.appendChild(item);
+                        }
+                        break;
+                        
+                    case 'shape':
+                        const shapeDiv = document.createElement('div');
+                        shapeDiv.style.fontSize = '6em';
+                        shapeDiv.style.animation = 'iconFloat 2s ease-in-out infinite';
+                        shapeDiv.textContent = visual.display;
+                        visualArea.appendChild(shapeDiv);
+                        break;
+                        
+                    case 'pattern':
+                        visual.sequence.forEach((item, index) => {
+                            const patternItem = document.createElement('span');
+                            patternItem.className = item === '?' ? 'pattern-item unknown' : 'pattern-item';
+                            patternItem.textContent = item;
+                            patternItem.style.animationDelay = `${index * 0.1}s`;
+                            visualArea.appendChild(patternItem);
+                        });
+                        break;
+                        
+                    case 'size':
+                        const container = document.createElement('div');
+                        container.className = 'size-comparison';
+                        
+                        visual.sizes.forEach(sizeData => {
+                            const itemDiv = document.createElement('div');
+                            itemDiv.className = 'size-item';
+                            
+                            const circle = document.createElement('div');
+                            circle.className = 'size-circle';
+                            circle.style.width = `${sizeData.size}px`;
+                            circle.style.height = `${sizeData.size}px`;
+                            circle.style.background = sizeData.label === 'A' ? 
+                                'linear-gradient(145deg, #3498DB, #2980B9)' : 
+                                'linear-gradient(145deg, #E74C3C, #C0392B)';
+                            
+                            const label = document.createElement('div');
+                            label.className = 'size-label';
+                            label.textContent = sizeData.label;
+                            
+                            itemDiv.appendChild(circle);
+                            itemDiv.appendChild(label);
+                            container.appendChild(itemDiv);
+                        });
+                        visualArea.appendChild(container);
+                        break;
+                        
+                    case 'addition':
+                        for (let i = 0; i < visual.a; i++) {
+                            const item = document.createElement('span');
+                            item.className = 'visual-item pop-in';
+                            item.textContent = '🔵';
+                            item.style.animationDelay = `${i * 0.08}s`;
+                            visualArea.appendChild(item);
+                        }
+                        
+                        const plus = document.createElement('span');
+                        plus.style.fontSize = '2em';
+                        plus.style.margin = '0 15px';
+                        plus.style.fontWeight = 'bold';
+                        plus.style.color = '#5D6D7E';
+                        plus.textContent = '+';
+                        visualArea.appendChild(plus);
+                        
+                        for (let i = 0; i < visual.b; i++) {
+                            const item = document.createElement('span');
+                            item.className = 'visual-item pop-in';
+                            item.textContent = '🟢';
+                            item.style.animationDelay = `${(visual.a + i) * 0.08}s`;
+                            visualArea.appendChild(item);
+                        }
+                        break;
+                        
+                    case 'subtraction':
+                        for (let i = 0; i < visual.start; i++) {
+                            const item = document.createElement('span');
+                            item.className = 'visual-item pop-in';
+                            item.textContent = '🍎';
+                            item.style.animationDelay = `${i * 0.08}s`;
+                            if (i >= visual.start - visual.subtract) {
+                                item.classList.add('crossed');
+                            }
+                            visualArea.appendChild(item);
+                        }
+                        break;
+                        
+                    case 'place_value':
+                        const pvContainer = document.createElement('div');
+                        pvContainer.style.display = 'flex';
+                        pvContainer.style.gap = '30px';
+                        pvContainer.style.alignItems = 'center';
+                        
+                        const tensBox = document.createElement('div');
+                        tensBox.style.textAlign = 'center';
+                        tensBox.innerHTML = `
+                            <div style="font-size: 1.2em; font-weight: bold; color: #3498DB; margin-bottom: 10px;">TENS</div>
+                            <div style="display: flex; gap: 5px;">
+                                ${Array(visual.tens).fill('<div style="width: 15px; height: 60px; background: linear-gradient(145deg, #3498DB, #2980B9); border-radius: 5px;"></div>').join('')}
+                            </div>
+                            <div style="font-size: 1.5em; font-weight: bold; margin-top: 10px;">${visual.tens}</div>
+                        `;
+                        
+                        const onesBox = document.createElement('div');
+                        onesBox.style.textAlign = 'center';
+                        onesBox.innerHTML = `
+                            <div style="font-size: 1.2em; font-weight: bold; color: #E74C3C; margin-bottom: 10px;">ONES</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 5px; max-width: 80px; justify-content: center;">
+                                ${Array(visual.ones).fill('<div style="width: 20px; height: 20px; background: linear-gradient(145deg, #E74C3C, #C0392B); border-radius: 50%;"></div>').join('')}
+                            </div>
+                            <div style="font-size: 1.5em; font-weight: bold; margin-top: 10px;">${visual.ones}</div>
+                        `;
+                        
+                        pvContainer.appendChild(tensBox);
+                        pvContainer.appendChild(onesBox);
+                        visualArea.appendChild(pvContainer);
+                        break;
+                        
+                    case 'clock':
+                        const clockFace = document.createElement('div');
+                        clockFace.className = 'clock-face';
+                        
+                        // Add numbers
+                        const numbers = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+                        numbers.forEach((num, i) => {
+                            const numEl = document.createElement('div');
+                            numEl.className = 'clock-number';
+                            const angle = (i * 30 - 90) * Math.PI / 180;
+                            const radius = 50;
+                            numEl.style.left = `${67 + radius * Math.cos(angle)}px`;
+                            numEl.style.top = `${67 + radius * Math.sin(angle)}px`;
+                            numEl.style.transform = 'translate(-50%, -50%)';
+                            numEl.textContent = num;
+                            clockFace.appendChild(numEl);
+                        });
+                        
+                        // Hour hand
+                        const hourHand = document.createElement('div');
+                        hourHand.className = 'clock-hand hour-hand';
+                        const hourAngle = ((visual.hour % 12) * 30 + visual.minute * 0.5);
+                        hourHand.style.transform = `rotate(${hourAngle}deg)`;
+                        clockFace.appendChild(hourHand);
+                        
+                        // Minute hand
+                        const minuteHand = document.createElement('div');
+                        minuteHand.className = 'clock-hand minute-hand';
+                        const minuteAngle = visual.minute * 6;
+                        minuteHand.style.transform = `rotate(${minuteAngle}deg)`;
+                        clockFace.appendChild(minuteHand);
+                        
+                        // Center dot
+                        const centerDot = document.createElement('div');
+                        centerDot.className = 'clock-center';
+                        clockFace.appendChild(centerDot);
+                        
+                        visualArea.appendChild(clockFace);
+                        break;
+                        
+                    case 'multiplication':
+                        const multContainer = document.createElement('div');
+                        multContainer.style.display = 'flex';
+                        multContainer.style.flexDirection = 'column';
+                        multContainer.style.gap = '8px';
+                        
+                        for (let row = 0; row < visual.a; row++) {
+                            const rowDiv = document.createElement('div');
+                            rowDiv.style.display = 'flex';
+                            rowDiv.style.gap = '8px';
+                            rowDiv.style.justifyContent = 'center';
+                            
+                            for (let col = 0; col < visual.b; col++) {
+                                const item = document.createElement('span');
+                                item.className = 'visual-item pop-in';
+                                item.textContent = '⭐';
+                                item.style.width = '35px';
+                                item.style.height = '35px';
+                                item.style.fontSize = '1.4em';
+                                item.style.animationDelay = `${(row * visual.b + col) * 0.05}s`;
+                                rowDiv.appendChild(item);
+                            }
+                            multContainer.appendChild(rowDiv);
+                        }
+                        visualArea.appendChild(multContainer);
+                        break;
+                        
+                    case 'division':
+                        const divContainer = document.createElement('div');
+                        divContainer.style.display = 'flex';
+                        divContainer.style.flexWrap = 'wrap';
+                        divContainer.style.gap = '15px';
+                        divContainer.style.justifyContent = 'center';
+                        
+                        const itemsPerGroup = visual.total / visual.groups;
+                        for (let g = 0; g < visual.groups; g++) {
+                            const groupDiv = document.createElement('div');
+                            groupDiv.style.border = '3px dashed #9B59B6';
+                            groupDiv.style.padding = '10px';
+                            groupDiv.style.borderRadius = '15px';
+                            groupDiv.style.background = 'rgba(155, 89, 182, 0.1)';
+                            groupDiv.style.display = 'flex';
+                            groupDiv.style.gap = '5px';
+                            groupDiv.style.flexWrap = 'wrap';
+                            groupDiv.style.maxWidth = '100px';
+                            groupDiv.style.justifyContent = 'center';
+                            
+                            for (let i = 0; i < itemsPerGroup; i++) {
+                                const item = document.createElement('span');
+                                item.textContent = '🍪';
+                                item.style.fontSize = '1.5em';
+                                groupDiv.appendChild(item);
+                            }
+                            divContainer.appendChild(groupDiv);
+                        }
+                        visualArea.appendChild(divContainer);
+                        break;
+                        
+                    case 'fraction':
+                        const fracContainer = document.createElement('div');
+                        fracContainer.className = 'fraction-visual';
+                        fracContainer.style.gridTemplateColumns = `repeat(${visual.denominator}, 1fr)`;
+                        fracContainer.style.width = `${visual.denominator * 60}px`;
+                        
+                        for (let i = 0; i < visual.denominator; i++) {
+                            const part = document.createElement('div');
+                            part.className = `fraction-part ${i < visual.numerator ? 'filled' : 'empty'}`;
+                            part.style.animationDelay = `${i * 0.1}s`;
+                            fracContainer.appendChild(part);
+                        }
+                        visualArea.appendChild(fracContainer);
+                        break;
+                        
+                    case 'measurement':
+                        const rulerContainer = document.createElement('div');
+                        rulerContainer.style.position = 'relative';
+                        rulerContainer.style.padding = '40px 20px 20px';
+                        
+                        // The item being measured
+                        const measuredItem = document.createElement('div');
+                        measuredItem.style.width = `${visual.length * 30}px`;
+                        measuredItem.style.height = '25px';
+                        measuredItem.style.background = 'linear-gradient(145deg, #E74C3C, #C0392B)';
+                        measuredItem.style.borderRadius = '5px';
+                        measuredItem.style.marginBottom = '10px';
+                        measuredItem.style.display = 'flex';
+                        measuredItem.style.alignItems = 'center';
+                        measuredItem.style.justifyContent = 'center';
+                        measuredItem.style.color = 'white';
+                        measuredItem.style.fontSize = '0.8em';
+                        measuredItem.style.fontWeight = 'bold';
+                        measuredItem.textContent = visual.name;
+                        
+                        // Ruler
+                        const ruler = document.createElement('div');
+                        ruler.style.display = 'flex';
+                        ruler.style.background = '#F7DC6F';
+                        ruler.style.borderRadius = '5px';
+                        ruler.style.overflow = 'hidden';
+                        ruler.style.border = '2px solid #D4AC0D';
+                        
+                        for (let i = 0; i <= 10; i++) {
+                            const mark = document.createElement('div');
+                            mark.style.width = '30px';
+                            mark.style.height = '40px';
+                            mark.style.borderRight = '1px solid #D4AC0D';
+                            mark.style.display = 'flex';
+                            mark.style.alignItems = 'flex-end';
+                            mark.style.justifyContent = 'center';
+                            mark.style.paddingBottom = '5px';
+                            mark.style.fontSize = '0.8em';
+                            mark.style.fontWeight = 'bold';
+                            mark.style.color = '#7D6608';
+                            mark.textContent = i;
+                            ruler.appendChild(mark);
+                        }
+                        
+                        rulerContainer.appendChild(measuredItem);
+                        rulerContainer.appendChild(ruler);
+                        visualArea.appendChild(rulerContainer);
+                        break;
+                }
+            }
+
+            displayAnswerOptions() {
+                const optionsContainer = document.getElementById('answerOptions');
+                optionsContainer.innerHTML = '';
+                
+                this.currentQuestion.options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.className = 'answer-btn';
+                    button.textContent = option;
+                    button.style.animationDelay = `${index * 0.1}s`;
+                    button.addEventListener('click', () => {
+                        this.checkAnswer(option, button);
+                    });
+                    optionsContainer.appendChild(button);
+                });
+            }
+
+            checkAnswer(selectedAnswer, buttonElement) {
+                const isCorrect = selectedAnswer === this.currentQuestion.correct || 
+                    selectedAnswer.toString() === this.currentQuestion.correct.toString();
+                
+                document.querySelectorAll('.answer-btn').forEach(btn => {
+                    btn.disabled = true;
+                });
+                
+                document.getElementById('hintBtn').classList.add('hidden');
+                
+                if (isCorrect) {
+                    buttonElement.classList.add('correct');
+                    this.score += Math.max(10 - this.hintsUsed * 2, 5);
+                    this.streak++;
+                    this.questionsCorrect++;
+                    
+                    this.playSound('correct');
+                    
+                    const phrases = [
+                        "Amazing! You got it! 🌟",
+                        "Fantastic work! 🎉",
+                        "You're a math star! ⭐",
+                        "Brilliant! Keep going! 🚀",
+                        "Super job! 👏",
+                        "Excellent! You're doing great! 💪",
+                        "Wonderful! 🌈",
+                        "Perfect! 🏆"
+                    ];
+                    
+                    const phrase = phrases[Math.floor(Math.random() * phrases.length)];
+                    this.showFeedback('correct', phrase);
+                    
+                    setTimeout(() => {
+                        this.speak(phrase.replace(/[^\w\s]/g, ''));
+                    }, 200);
+                    
+                    this.celebrate();
+                } else {
+                    buttonElement.classList.add('incorrect');
+                    this.streak = 0;
+                    
+                    this.playSound('incorrect');
+                    
+                    document.querySelectorAll('.answer-btn').forEach(btn => {
+                        if (btn.textContent === this.currentQuestion.correct.toString()) {
+                            btn.classList.add('correct');
+                        }
+                    });
+                    
+                    const encouragements = [
+                        `Good try! The answer is ${this.currentQuestion.correct}. 💪`,
+                        `Almost! It's ${this.currentQuestion.correct}. Keep trying! 🌱`,
+                        `Nice effort! The correct answer is ${this.currentQuestion.correct}. 👍`,
+                        `That's okay! It's ${this.currentQuestion.correct}. You're learning! 📚`
+                    ];
+                    
+                    const feedback = encouragements[Math.floor(Math.random() * encouragements.length)];
+                    this.showFeedback('incorrect', feedback);
+                    
+                    setTimeout(() => {
+                        this.speak(feedback.replace(/[^\w\s]/g, ''));
+                    }, 200);
+                }
+                
+                this.hintsUsed = 0;
+                this.updateScore();
+                this.updateStars();
+                document.getElementById('nextBtn').classList.remove('hidden');
+            }
+
+            showFeedback(type, message) {
+                const feedback = document.getElementById('feedback');
+                feedback.textContent = message;
+                feedback.className = `feedback ${type}`;
+                feedback.style.display = 'block';
+            }
+
+            clearFeedback() {
+                document.getElementById('feedback').style.display = 'none';
+                document.getElementById('storyArea').innerHTML = '';
+                
+                document.querySelectorAll('.answer-btn').forEach(btn => {
+                    btn.disabled = false;
+                    btn.classList.remove('correct', 'incorrect');
+                });
+            }
+
+            showHint() {
+                if (this.currentQuestion.hint) {
+                    this.hintsUsed++;
+                    this.showFeedback('hint', `💡 Hint: ${this.currentQuestion.hint}`);
+                    this.speak(`Here's a hint: ${this.currentQuestion.hint}`);
+                }
+            }
+
+            updateScore() {
+                document.getElementById('scoreValue').textContent = this.score;
+                document.getElementById('streakValue').textContent = this.streak;
+            }
+
+            updateStars() {
+                const stars = document.querySelectorAll('.star');
+                const percentage = this.questionsCorrect / Math.max(this.questionCount, 1);
+                
+                stars.forEach((star, index) => {
+                    if (percentage > (index + 1) * 0.25) {
+                        star.textContent = '⭐';
+                        star.classList.add('earned');
+                    } else {
+                        star.textContent = '☆';
+                        star.classList.remove('earned');
+                    }
+                });
+            }
+
+            updateProgress() {
+                const progress = (this.questionCount / this.totalQuestions) * 100;
+                document.getElementById('progressFill').style.width = `${progress}%`;
+                document.getElementById('currentQ').textContent = this.questionCount;
+                document.getElementById('totalQ').textContent = this.totalQuestions;
+                document.getElementById('progressPercent').textContent = `${Math.round(progress)}%`;
+            }
+
+            celebrate() {
+                const celebration = document.getElementById('celebration');
+                const colors = ['#FF6B9D', '#5DADE2', '#58D68D', '#F5B041', '#9B59B6', '#F7DC6F'];
+                const shapes = ['●', '★', '♥', '◆', '▲'];
+                
+                for (let i = 0; i < 30; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                    confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    celebration.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 4000);
+                }
+            }
+
+            endGame() {
+                const percentage = Math.round((this.questionsCorrect / this.totalQuestions) * 100);
+                let badge, badgeText, message;
+                
+                if (percentage >= 90) {
+                    badge = '🏆';
+                    badgeText = 'Math Champion!';
+                    message = "Outstanding! You're a math superstar!";
+                } else if (percentage >= 80) {
+                    badge = '🌟';
+                    badgeText = 'Math Star!';
+                    message = "Excellent work! You're doing amazing!";
+                } else if (percentage >= 70) {
+                    badge = '🎯';
+                    badgeText = 'Great Effort!';
+                    message = "Good job! Keep practicing!";
+                } else if (percentage >= 50) {
+                    badge = '📚';
+                    badgeText = 'Keep Learning!';
+                    message = "Nice try! Practice makes perfect!";
+                } else {
+                    badge = '🌱';
+                    badgeText = 'Growing Learner!';
+                    message = "Don't give up! You're getting better!";
+                }
+                
+                const gameArea = document.getElementById('gameArea');
+                gameArea.innerHTML = `
+                    <div class="end-game">
+                        <h2>🎉 Adventure Complete! 🎉</h2>
+                        <p class="final-score">${message}</p>
+                        <div class="achievement-badge">
+                            <span class="badge-icon">${badge}</span>
+                            <span class="badge-text">${badgeText}</span>
+                        </div>
+                        <p class="final-score">
+                            You got <strong>${this.questionsCorrect}</strong> out of <strong>${this.totalQuestions}</strong> correct!<br>
+                            Final Score: <strong>${this.score}</strong> points
+                        </p>
+                        <div class="controls">
+                            <button class="control-btn primary" id="playAgainBtn">🔄 Play Again</button>
+                            <button class="control-btn secondary" id="changeTopic">📚 New Topic</button>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('playAgainBtn').addEventListener('click', () => {
+                    this.selectTopic(this.currentTopic);
+                });
+                
+                document.getElementById('changeTopic').addEventListener('click', () => {
+                    this.showTopicSelection();
+                });
+                
+                setTimeout(() => {
+                    this.speak(message);
+                }, 500);
+                
+                if (percentage >= 70) {
+                    for (let i = 0; i < 3; i++) {
+                        setTimeout(() => this.celebrate(), i * 500);
+                    }
+                }
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            new MathQuestApp();
+        });
+    </script>
+</body>
+</html>
