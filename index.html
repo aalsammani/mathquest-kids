@@ -108,8 +108,8 @@ img,svg{display:block;max-width:100%}
 }
 .icon-btn:hover{background:var(--paper-warm);transform:translateY(-2px)}
 .avatar-btn{background:linear-gradient(140deg,#FFF3D6,#FFE3EC);border-color:#F4D9A6}
-#btn-back{display:none}
-#btn-back.show{display:grid}
+#btn-back,#btn-home{display:none}
+#btn-back.show,#btn-home.show{display:grid}
 
 /* ---------- Buttons: chunky toy blocks ---------- */
 .btn{
@@ -304,7 +304,7 @@ body.boss-mode .question-card{background:linear-gradient(135deg,#3A2E6E 0%,#8B3A
 .answer{
   background:var(--paper);border:3px solid var(--line);border-radius:20px;
   padding:16px 12px;cursor:pointer;font-family:'Baloo 2',cursive;
-  font-size:1.3rem;font-weight:700;color:var(--ink);
+  font-size:clamp(1.02rem,3.6vw,1.3rem);font-weight:700;color:var(--ink);
   box-shadow:0 5px 0 var(--line);
   transition:transform .12s ease, border-color .15s ease, background .2s ease;
   overflow-wrap:anywhere;
@@ -360,13 +360,7 @@ body.boss-mode .question-card{background:linear-gradient(135deg,#3A2E6E 0%,#8B3A
 .pv-row{display:flex;flex-wrap:wrap;justify-content:center;max-width:130px;gap:2px}
 .pv-num{font-family:'Baloo 2';font-size:1.3rem;margin-top:6px}
 
-.clock{width:170px;height:170px;border:8px solid var(--ink);border-radius:50%;position:relative;background:#fff;box-shadow:var(--shadow-card),inset 0 0 18px rgba(45,53,97,.06)}
-.clock .cnum{position:absolute;font-family:'Baloo 2';font-weight:700;font-size:.95rem;transform:translate(-50%,-50%)}
-.clock .hand{position:absolute;left:50%;bottom:50%;transform-origin:bottom center;border-radius:6px}
-.clock .h-hour{width:7px;height:42px;background:var(--ink);margin-left:-3.5px}
-.clock .h-min{width:5px;height:60px;background:var(--blue-deep);margin-left:-2.5px}
-.clock .cdot{position:absolute;top:50%;left:50%;width:14px;height:14px;background:var(--coral);border-radius:50%;transform:translate(-50%,-50%);z-index:2}
-.clock .tick{position:absolute;left:50%;top:4px;width:2px;height:7px;background:var(--ink-faint);transform-origin:50% 73px}
+.clock-svg{width:clamp(160px,48vw,210px);height:auto;filter:drop-shadow(0 8px 16px rgba(45,53,97,.14))}
 
 .coin{
   border-radius:50%;display:inline-grid;place-items:center;
@@ -624,10 +618,14 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{
   .answers{grid-template-columns:repeat(2,1fr)}
   .question-card{padding:18px}
   .lesson-card{padding:20px 16px}
-  .clock{width:150px;height:150px}
+  .bp-stage{height:360px}
 }
-@media(max-width:380px){
+@media(max-width:520px){
+  .brand .logo{display:none}
+}
+@media(max-width:400px){
   #pill-level{display:none}
+  .icon-btn{width:42px;height:42px;font-size:1.2rem}
 }
 
 /* ---------- Print: report & certificate ---------- */
@@ -661,6 +659,7 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{
   <!-- ======================= Top bar ======================= -->
   <header class="topbar">
     <button id="btn-back" class="icon-btn" aria-label="Go back">←</button>
+    <button id="btn-home" class="icon-btn" aria-label="Go to home page">🏠</button>
     <div class="brand">
       <div class="logo" aria-hidden="true">🧮</div>
       <h1>MathQuest Kids<small>Math adventures for K–3</small></h1>
@@ -870,6 +869,17 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{
   </div>
 </div>
 
+<div class="modal-backdrop" id="modal-confirm" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+  <div class="modal" style="text-align:center">
+    <h3 id="confirm-title">Are you sure?</h3>
+    <p id="confirm-msg" style="font-weight:700;color:var(--ink-soft);margin-bottom:18px"></p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-ghost" id="confirm-no">Stay</button>
+      <button class="btn btn-coral" id="confirm-yes">Leave</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast" role="status"></div>
 <div id="confetti-layer" aria-hidden="true"></div>
 <div class="sr-only" aria-live="polite" id="sr-live"></div>
@@ -880,7 +890,10 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{
 <script>
 'use strict';
 /* ============================================================
-   MathQuest Kids — application code
+   MathQuest Kids — application code (v1.1 refinement pass)
+   v1.1: SVG analog clock, Home button + guarded navigation,
+   in-app confirm dialogs (WebView-safe), results back-stack fix,
+   legacy save-data migration, money edge cases, small-screen polish.
    Modules: Util, Store, Settings, Sound, Voice, Profile,
    Rewards, Nav, Curriculum, Visuals, QGen, WordProblems,
    Quiz, Map, Games, Collection, Shop, Dashboard.
@@ -1093,7 +1106,11 @@ const Profile = {
   topic(grade, topicId) {
     const s = this.data.stats;
     if (!s[grade]) s[grade] = {};
-    if (!s[grade][topicId]) s[grade][topicId] = { attempts: 0, correct: 0, stars: 0, bestPct: 0, timeMs: 0, mastered: false, plays: 0 };
+    // Merge over defaults so data saved by older versions never lacks a field.
+    s[grade][topicId] = Object.assign(
+      { attempts: 0, correct: 0, stars: 0, bestPct: 0, timeMs: 0, mastered: false, plays: 0 },
+      s[grade][topicId] || {}
+    );
     return s[grade][topicId];
   },
   addCoins(n) { this.data.coins += n; this.save(); HUD.refresh(); },
@@ -1165,16 +1182,29 @@ const Nav = {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const el = document.getElementById('screen-' + id);
     if (el) el.classList.add('active');
-    document.getElementById('btn-back').classList.toggle('show', id !== 'home');
+    const away = id !== 'home';
+    document.getElementById('btn-back').classList.toggle('show', away);
+    document.getElementById('btn-home').classList.toggle('show', away);
     window.scrollTo({ top: 0, behavior: Settings.reduced() ? 'auto' : 'smooth' });
     if (id !== 'game-balloon') BalloonGame.stop();
+    if (id !== 'quiz') document.body.classList.remove('boss-mode');
   },
   back() {
     if (this.current === 'quiz') { Quiz.confirmExit(); return; }
     const prev = this.stack.pop() || 'home';
+    if (prev === 'home') Home.render();   // keep grade progress bars fresh
     this.show(prev, false);
   },
-  home() { this.stack = []; this.show('home', false); }
+  /* Runs `fn` immediately, or after confirmation if it would abandon a quiz. */
+  guard(fn) {
+    if (this.current === 'quiz') {
+      UI.confirm('Leave this quiz? Your coins are saved, but the round will not count.')
+        .then(yes => { if (yes) fn(); });
+    } else fn();
+  },
+  goHome() {
+    this.guard(() => { Home.render(); this.stack = []; this.show('home', false); });
+  }
 };
 
 const UI = {
@@ -1204,7 +1234,21 @@ const UI = {
     }
   },
   openModal(id) { document.getElementById(id).classList.add('open'); },
-  closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  closeModal(id) { document.getElementById(id).classList.remove('open'); },
+  /* In-app confirm dialog (native confirm() is unreliable in mobile WebViews). */
+  confirm(msg, okLabel = 'Leave', cancelLabel = 'Stay') {
+    return new Promise(resolve => {
+      document.getElementById('confirm-msg').textContent = msg;
+      const yes = document.getElementById('confirm-yes');
+      const no = document.getElementById('confirm-no');
+      yes.textContent = okLabel; no.textContent = cancelLabel;
+      const done = val => { this.closeModal('modal-confirm'); yes.onclick = no.onclick = null; resolve(val); };
+      yes.onclick = () => done(true);
+      no.onclick = () => done(false);
+      this.openModal('modal-confirm');
+      no.focus();
+    });
+  }
 };
 </script>
 <script>
@@ -1322,28 +1366,43 @@ const Visuals = {
     return wrap;
   },
 
-  /* Analog clock — hour hand correctly offset by the minutes. */
+  /* Analog clock, drawn as SVG so numbers, ticks, hands, and pivot are
+     always perfectly aligned and scale together on any screen size.
+     Hour hand is correctly offset by the minutes (30° per hour + 0.5° per minute). */
   v_clock(s) {
-    const c = document.createElement('div'); c.className = 'clock';
-    c.setAttribute('role', 'img');
-    c.setAttribute('aria-label', `An analog clock showing ${s.h}:${String(s.m).padStart(2, '0')}`);
-    const R = 62, cx = 77, cy = 77;
-    for (let i = 0; i < 12; i++) {
-      const num = document.createElement('span'); num.className = 'cnum';
-      const val = i === 0 ? 12 : i;
-      const ang = (i * 30 - 90) * Math.PI / 180;
-      num.style.left = (cx + R * Math.cos(ang)) + 'px';
-      num.style.top = (cy + R * Math.sin(ang)) + 'px';
-      num.textContent = val;
-      c.appendChild(num);
+    const C = 100, rFace = 92, rNum = 66, rTickOut = 88, hourLen = 36, minLen = 52;
+    const pt = (deg, r) => {
+      const rad = (deg - 90) * Math.PI / 180;
+      return [C + r * Math.cos(rad), C + r * Math.sin(rad)];
+    };
+    let svg = '';
+    // Face
+    svg += `<circle cx="${C}" cy="${C}" r="${rFace}" fill="#fff" stroke="#2D3561" stroke-width="8"/>`;
+    // Minute ticks (thin) and hour ticks (bold)
+    for (let i = 0; i < 60; i++) {
+      const major = i % 5 === 0;
+      const [x1, y1] = pt(i * 6, major ? rTickOut - 9 : rTickOut - 4);
+      const [x2, y2] = pt(i * 6, rTickOut);
+      svg += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${major ? '#2D3561' : '#B9C1DC'}" stroke-width="${major ? 3 : 1.5}" stroke-linecap="round"/>`;
     }
-    const hour = document.createElement('div'); hour.className = 'hand h-hour';
-    hour.style.transform = `rotate(${(s.h % 12) * 30 + s.m * 0.5}deg)`;
-    const min = document.createElement('div'); min.className = 'hand h-min';
-    min.style.transform = `rotate(${s.m * 6}deg)`;
-    const dot = document.createElement('div'); dot.className = 'cdot';
-    c.append(hour, min, dot);
-    return c;
+    // Numbers 1–12, well inside the tick ring so hands never overlap them visually
+    for (let n = 1; n <= 12; n++) {
+      const [x, y] = pt(n * 30, rNum);
+      svg += `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-family="Baloo 2, Nunito, sans-serif" font-weight="700" font-size="17" fill="#2D3561">${n}</text>`;
+    }
+    // Hands (short tail through the pivot for a real-clock look)
+    const hourDeg = (s.h % 12) * 30 + s.m * 0.5;
+    const minDeg = s.m * 6;
+    const [hx, hy] = pt(hourDeg, hourLen), [hx0, hy0] = pt(hourDeg + 180, 10);
+    const [mx, my] = pt(minDeg, minLen), [mx0, my0] = pt(minDeg + 180, 12);
+    svg += `<line x1="${hx0.toFixed(1)}" y1="${hy0.toFixed(1)}" x2="${hx.toFixed(1)}" y2="${hy.toFixed(1)}" stroke="#2D3561" stroke-width="7" stroke-linecap="round"/>`;
+    svg += `<line x1="${mx0.toFixed(1)}" y1="${my0.toFixed(1)}" x2="${mx.toFixed(1)}" y2="${my.toFixed(1)}" stroke="#1F97DD" stroke-width="4.5" stroke-linecap="round"/>`;
+    // Pivot
+    svg += `<circle cx="${C}" cy="${C}" r="6.5" fill="#FF6B6B" stroke="#fff" stroke-width="2.5"/>`;
+
+    const wrap = document.createElement('div');
+    wrap.innerHTML = `<svg class="clock-svg" viewBox="0 0 200 200" role="img" aria-label="An analog clock showing ${s.h}:${String(s.m).padStart(2, '0')}. The short hour hand and long minute hand point at the time.">${svg}</svg>`;
+    return wrap.firstChild;
   },
 
   /* US coins with value printed on each — never color-only. */
@@ -2285,10 +2344,14 @@ QGen.g2_money = (diff) => {
     };
   }
   const price = Util.ri(15, 85);
-  const paid = Math.min(100, (Math.ceil(price / 25) * 25) + Util.pick([0, 25]));
+  let paid = Math.ceil(price / 25) * 25;
+  if (paid <= price) paid += 25;                 // always pay MORE than the price
+  if (paid < 100 && Math.random() < 0.4) paid += 25;
+  paid = Math.min(100, paid);
   const change = paid - price;
+  const paidLabel = paid === 100 ? '$1.00' : paid + '\u00a2';
   return {
-    badge: '🪙 Making change', prompt: `A sticker costs ${price}¢. You pay with ${paid}¢. How much change do you get back?`,
+    badge: '🪙 Making change', prompt: `A sticker costs ${price}¢. You pay with ${paidLabel}. How much change do you get back?`,
     options: Util.numOptions(change, 8, 0).map(v => `${v}¢`), correct: `${change}¢`,
     hint1: 'Change = what you paid − the price.',
     hint2: `Count up from ${price} to ${paid}. How far is that?`,
@@ -3165,6 +3228,7 @@ const Quiz = {
     if (cb) cb.addEventListener('click', () => Certificates.print(grade.label, topic.name, stars));
 
     Nav.show('results');
+    Nav.stack = ['home', 'map'];   // Back → trail; the stale quiz screen is unreachable
     setTimeout(() => {
       document.querySelectorAll('.results-stars span').forEach((el, i) => {
         setTimeout(() => el.classList.add('pop'), i * 280);
@@ -3175,11 +3239,12 @@ const Quiz = {
   },
 
   confirmExit() {
-    if (window.confirm('Leave this quiz? Your coins are saved, but the round will not count.')) {
+    UI.confirm('Leave this quiz? Your coins are saved, but the round will not count.').then(yes => {
+      if (!yes) return;
       document.body.classList.remove('boss-mode');
       Nav.stack = [];
       MapView.open(this.s ? this.s.gradeKey : (Store.get('lastGrade', 'k')));
-    }
+    });
   }
 };
 
@@ -3602,7 +3667,11 @@ const Dashboard = {
    ============================================================ */
 function bindUI() {
   document.getElementById('btn-back').addEventListener('click', () => { Sound.play('click'); Nav.back(); });
-  document.getElementById('btn-avatar').addEventListener('click', () => { Sound.play('click'); Collection.render(); Nav.show('collection'); });
+  document.getElementById('btn-home').addEventListener('click', () => { Sound.play('click'); Nav.goHome(); });
+  document.getElementById('btn-avatar').addEventListener('click', () => {
+    Sound.play('click');
+    Nav.guard(() => { Collection.render(); Nav.show('collection'); });
+  });
   document.getElementById('btn-settings').addEventListener('click', () => { Sound.play('click'); UI.openModal('modal-settings'); });
 
   // Screen jump buttons (data-go)
@@ -3639,10 +3708,8 @@ function bindUI() {
   document.getElementById('btn-print-report').addEventListener('click', () => Dashboard.printReport());
   document.getElementById('btn-export-csv').addEventListener('click', () => Dashboard.exportCSV());
   document.getElementById('btn-reset-data').addEventListener('click', () => {
-    if (window.confirm('Erase ALL progress, coins, and badges on this device? This cannot be undone.')) {
-      Store.clearAll();
-      window.location.reload();
-    }
+    UI.confirm('Erase ALL progress, coins, and badges on this device? This cannot be undone.', 'Erase everything', 'Keep my progress')
+      .then(yes => { if (yes) { Store.clearAll(); window.location.reload(); } });
   });
 
   // Print cleanup
