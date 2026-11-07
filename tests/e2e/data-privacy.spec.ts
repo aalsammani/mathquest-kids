@@ -12,7 +12,7 @@ test.describe('privacy, persistence and migration', () => {
     await page.getByRole('button', { name: /^Coins ?\. / }).click();
     await page.getByRole('button', { name: '🚀 Practice' }).click();
     await completeItem(page);
-    await page.goto('/');
+    await page.goto('./');
     await page.getByRole('button', { name: /Math Tools/ }).click();
     await page.getByRole('button', { name: /Clock/ }).click();
     expect(foreign).toEqual([]);
@@ -26,7 +26,7 @@ test.describe('privacy, persistence and migration', () => {
       localStorage.setItem('mq_settings', JSON.stringify({ sound: true, voice: false, slow: false, large: false, motion: true, contrast: false, name: 'Ada' }));
       localStorage.setItem('mq_lastGrade', JSON.stringify('3'));
     });
-    await page.goto('/');
+    await page.goto('./');
     await expect(page.getByRole('heading', { name: /Hi, Ada!/ })).toBeVisible();
     await expect(page.locator('#hud-coins')).toHaveText('137');
     await expect(page.locator('.grade-card.recommended .g-name')).toHaveText('Level 4');
@@ -40,7 +40,7 @@ test.describe('privacy, persistence and migration', () => {
 
   test('recovers from corrupt saved data without crashing', async ({ page }) => {
     await page.addInitScript(() => { if (!sessionStorage.getItem('c')) { sessionStorage.setItem('c', '1'); localStorage.setItem('mq2_state', '{broken'); } });
-    await page.goto('/');
+    await page.goto('./');
     await expect(page.getByRole('heading', { name: 'Welcome to MathQuest Kids!' })).toBeVisible();
     expect(await page.evaluate(() => Object.keys(localStorage).some(k => k.startsWith('mq2_corrupt_')))).toBe(true);
   });

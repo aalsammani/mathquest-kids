@@ -2,7 +2,7 @@ import { expect, type Page } from '@playwright/test';
 import type { Interaction, Question } from '../../src/core/types';
 
 export async function onboard(page: Page, level: 1 | 2 | 3 | 4 = 2) {
-  await page.goto('/');
+  await page.goto('./');
   await page.getByRole('button', { name: new RegExp(`Start at Level ${level}`) }).click();
   await expect(page.getByRole('heading', { name: /Ready for a math adventure/ })).toBeVisible();
 }

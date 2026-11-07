@@ -3,7 +3,7 @@ import { answer, completeItem, currentQuestion, noHorizontalScroll, onboard, pla
 
 test.describe('first launch & levels', () => {
   test('onboarding → four Level labels, no grade terminology', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('./');
     await expect(page.getByRole('heading', { name: 'Welcome to MathQuest Kids!' })).toBeVisible();
     await noHorizontalScroll(page);
     await page.getByRole('button', { name: /Start at Level 2/ }).click();
@@ -117,7 +117,7 @@ test.describe('learning flow', () => {
       localStorage.setItem('mq2_state', JSON.stringify({ schemaVersion: 2, activeProfileId: id, onboarded: true, settings: { sound: false, voice: false, slow: false, large: false, motion: true, contrast: false, volume: 0.5 }, parent: { breakMinutes: 0, reviewDelayDays: 1, timedGames: false },
         profiles: { [id]: { id, nickname: 'Tester', mascot: 'fox', createdAt: t, level: 2, coins: 0, unlocked: ['fox'], badges: {}, practiceDays: [], totals: { answered: 8, correct: 8, timeMs: 0 }, skills: { 'L2-add20': { attempts, stars: 3, bestPct: 100, plays: 1, timeMs: 0 } }, history: [], counters: { explain: 0, mistake: 0, anotherWay: 1, detective: 0, stories: 0, persistence: 0, tools: [], worlds: [], checksPassed: 0 }, familyDone: [] } } }));
     });
-    await page.goto('/');
+    await page.goto('./');
     await page.getByRole('button', { name: /^Level 2 ?:/ }).click();
     await expect(page.getByRole('button', { name: /^Adding to 20 ?\. .*Ready for a Skill Check/ })).toBeVisible();
     await page.getByRole('button', { name: /^Adding to 20 ?\. / }).click();
@@ -135,7 +135,7 @@ test.describe('learning flow', () => {
     await onboard(page, 1);
     const seen = new Set<string>();
     const runSkill = async (level: number, skillName: RegExp, items = 8) => {
-      await page.goto('/');
+      await page.goto('./');
       await page.getByRole('button', { name: new RegExp(`^Level ${level} ?:`) }).click();
       await page.getByRole('button', { name: skillName }).click();
       await page.getByRole('button', { name: '🚀 Practice' }).click();

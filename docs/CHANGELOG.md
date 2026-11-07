@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.0-rc.1 — GitHub Pages packaging (2026-11-06)
+
+Deployment only. The app's code, curriculum, generators and design are unchanged.
+
+- Added `.github/workflows/deploy.yml`. On each push to `main` (or a manual run) it runs `npm ci`, the type check, unit tests, math validation, the Pages build, a build-output check, and browser tests under the site path. It deploys `dist-pages/` with `actions/deploy-pages` and never publishes the TypeScript source.
+- Added the `vite.config.ts` modes `pages` and `e2e-pages` (base `/mathquest-kids/`, overridable with `BASE_PATH`). The default build that Capacitor uses keeps the relative base `./`.
+- In Pages builds, the PWA manifest's `start_url` and `scope` follow the base path. Pages builds also gain a `404.html` that redirects to the app, plus `.nojekyll`. The service worker now sets `skipWaiting`/`clientsClaim` explicitly and does not precache `404.html`.
+- Added `scripts/verify-pages-build.mjs`, `scripts/serve-pages.mjs` (a local server that behaves like GitHub Pages), `playwright.pages.config.ts` and `tests/pages/deploy.spec.ts`. E2E specs now navigate with base-relative URLs (`page.goto('./')`).
+- Playwright can use the bundled Chromium (`PW_CHANNEL=chromium`, used in CI). Locally it still defaults to Microsoft Edge.
+- Added `docs/GITHUB_PAGES.md` and `GITHUB_UPLOAD_INSTRUCTIONS.md`.
+
 ## 2.0.0-rc.1 (2026-11-06)
 
 A complete rebuild of v1.1 as a TypeScript, Vite, PWA and Capacitor app. The original is preserved in `legacy/`, with a zip backup and a local git baseline (`e35055d`).

@@ -49,6 +49,18 @@ npx cap open ios            # Xcode 26+ (macOS only)
 
 Release builds are covered in [`docs/ANDROID_BUILD.md`](docs/ANDROID_BUILD.md) and [`docs/IOS_BUILD.md`](docs/IOS_BUILD.md).
 
+## Web version on GitHub Pages
+
+The repository publishes the web app through GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)). Each push to `main` runs the type check, unit tests, math validation, a production build, a build-output check, and browser tests under the site path. The compiled site is deployed only if every step passes. Expected address: **https://aalsammani.github.io/mathquest-kids/**. In the repository, go to **Settings → Pages** and set **Source** to **GitHub Actions** once.
+
+```bash
+npm run build:pages     # production build for GitHub Pages → dist-pages/ (base /mathquest-kids/), then verifies it
+npm run preview:pages   # serve dist-pages/ like GitHub Pages → http://localhost:4175/mathquest-kids/
+npm run test:pages      # E2E suite + deployment checks under /mathquest-kids/ (phone, tablet, desktop)
+```
+
+The Android/iOS build is separate: `npm run build` → `dist/` with relative paths, used by `npx cap sync`. Run `cap sync` only after `npm run build`, never after `build:pages`. Details: [`docs/GITHUB_PAGES.md`](docs/GITHUB_PAGES.md). Upload steps: [`GITHUB_UPLOAD_INSTRUCTIONS.md`](GITHUB_UPLOAD_INSTRUCTIONS.md).
+
 ## Project layout
 
 ```
@@ -59,7 +71,9 @@ src/learning/     mastery evidence model, sessions & adaptation, recommendations
 src/data/         storage (localStorage / Capacitor Preferences), schema v2 + v1 migration, export
 src/ui/           shell, visuals (SVG), interactions, screens
 src/platform/     Capacitor integration (back button, lifecycle, file save/share)
-tests/            unit/, property/, validation/, e2e/
+tests/            unit/, property/, validation/, e2e/, pages/ (GitHub Pages deployment checks)
+scripts/          icon generation, smoke/audit harnesses, Pages build verifier and Pages-like local server
+.github/          GitHub Actions workflow: test, build and deploy to GitHub Pages
 legacy/           the original v1.1 app and earlier versions, preserved unchanged
 docs/             audit, architecture, curriculum, validation, accessibility, privacy, build, store
 ```
@@ -78,6 +92,7 @@ docs/             audit, architecture, curriculum, validation, accessibility, pr
 | Policy references (COPPA, Play, Apple, WCAG) | [docs/research/POLICY_REFERENCES.md](docs/research/POLICY_REFERENCES.md) |
 | Accessibility | [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) |
 | Privacy & data flow | [docs/PRIVACY_AND_DATA_FLOW.md](docs/PRIVACY_AND_DATA_FLOW.md) |
+| GitHub Pages deployment | [docs/GITHUB_PAGES.md](docs/GITHUB_PAGES.md), [GITHUB_UPLOAD_INSTRUCTIONS.md](GITHUB_UPLOAD_INSTRUCTIONS.md) |
 | Android / iOS builds | [docs/ANDROID_BUILD.md](docs/ANDROID_BUILD.md), [docs/IOS_BUILD.md](docs/IOS_BUILD.md) |
 | Store checklists | [docs/GOOGLE_PLAY_CHECKLIST.md](docs/GOOGLE_PLAY_CHECKLIST.md), [docs/APPLE_APP_STORE_CHECKLIST.md](docs/APPLE_APP_STORE_CHECKLIST.md) |
 | Store listing, privacy policy draft | [docs/store/](docs/store/) |

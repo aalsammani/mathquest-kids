@@ -18,7 +18,7 @@ async function scan(page: Page, name: string) {
 test.describe('accessibility (axe-core, WCAG 2.2 A/AA rules)', () => {
   test('all main screens have no serious/critical violations', async ({ page }) => {
     test.slow();
-    await page.goto('/');
+    await page.goto('./');
     await scan(page, 'welcome');
     await page.getByRole('button', { name: /Start at Level 3/ }).click();
     await scan(page, 'home');
@@ -29,15 +29,15 @@ test.describe('accessibility (axe-core, WCAG 2.2 A/AA rules)', () => {
     await page.getByRole('button', { name: '🚀 Practice' }).click();
     await currentQuestion(page);
     await scan(page, 'activity');
-    await page.goto('/');
+    await page.goto('./');
     await page.getByRole('button', { name: /Math Tools/ }).click();
     await scan(page, 'tools');
     await page.getByRole('button', { name: /Base-Ten/ }).click();
     await scan(page, 'tool-blocks');
-    await page.goto('/');
+    await page.goto('./');
     await page.getByRole('button', { name: /My Collection/ }).click();
     await scan(page, 'collection');
-    await page.goto('/');
+    await page.goto('./');
     await page.getByRole('button', { name: 'Settings' }).click();
     await scan(page, 'settings-modal');
     await page.keyboard.press('Escape');
