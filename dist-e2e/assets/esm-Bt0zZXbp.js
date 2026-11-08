@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./web-Bmtrgx4U.js","./index-DcrmG04c.js","./index-rYdwxn_D.css"])))=>i.map(i=>d[i]);
-import{i as e,t}from"./index-DcrmG04c.js";var n;(function(e){e[e.Flush=0]=`Flush`,e[e.Add=1]=`Add`})(n||(n={}));var r=e(`TextToSpeech`,{web:()=>t(()=>import(`./web-Bmtrgx4U.js`).then(e=>new e.TextToSpeechWeb),__vite__mapDeps([0,1,2]),import.meta.url)});`speechSynthesis`in window&&window.speechSynthesis;export{n as QueueStrategy,r as TextToSpeech};

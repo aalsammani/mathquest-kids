@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">MathQuest Kids</string>
-    <string name="title_activity_main">MathQuest Kids</string>
-    <string name="package_name">com.alsammani.mathquestkids</string>
-    <string name="custom_url_scheme">com.alsammani.mathquestkids</string>
-</resources>

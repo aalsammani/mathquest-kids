@@ -1,7 +1,0 @@
-{
- "project": "tablet",
- "screen": "activity",
- "axe": "4.14.0",
- "passes": 23,
- "violations": []
-}
