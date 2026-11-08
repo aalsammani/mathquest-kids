@@ -1,0 +1,32 @@
+node_modules/
+dist/
+dist-e2e/
+test-results/
+playwright-report/
+reports/e2e/
+android/app/build/
+android/.gradle/
+android/build/
+ios/App/Pods/
+ios/App/build/
+ios/DerivedData/
+*.keystore
+*.jks
+keystore.properties
+.env
+.env.*
+test-results/
+reports/e2e/html/
+android/keystore.properties
+android/release/
+# GitHub Pages builds and test output
+dist-pages/
+dist-e2e-pages/
+reports/e2e-pages/
+# Local archives and OS/editor clutter
+node_modules.zip
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,684 @@
+{
+  "file": "legacy/index-v1.1-original.html",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "screens": [
+    "reports/legacy-screens/home-phone.png",
+    "reports/legacy-screens/quiz-phone.png",
+    "reports/legacy-screens/home-tablet.png",
+    "reports/legacy-screens/home-desktop.png"
+  ],
+  "generators": {
+    "k_count": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 11
+    },
+    "k_compare": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 2020,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 92
+    },
+    "k_shapes": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 264,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [
+        {
+          "issue": "square also a rectangle/rhombus",
+          "prompt": "What shape is this?",
+          "options": [
+            "square",
+            "triangle",
+            "rectangle",
+            "circle"
+          ]
+        },
+        {
+          "issue": "square also a rectangle/rhombus",
+          "prompt": "What shape is this?",
+          "options": [
+            "triangle",
+            "square",
+            "rectangle",
+            "circle"
+          ]
+        },
+        {
+          "issue": "square also a rectangle/rhombus",
+          "prompt": "What shape is this?",
+          "options": [
+            "square",
+            "triangle",
+            "rectangle",
+            "circle"
+          ]
+        }
+      ],
+      "distinctPrompts": 2
+    },
+    "k_patterns": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 1
+    },
+    "k_position": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 9
+    },
+    "k_sort": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 3
+    },
+    "k_addsub": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 134
+    },
+    "k_stories": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 346,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 2654,
+      "examples": [
+        {
+          "issue": "comparison story drawn as take-away",
+          "story": "Goalie Gil has 5 medals and Coach Cam has 4.",
+          "prompt": "How many more medals does Goalie Gil have than Coach Cam?"
+        },
+        {
+          "issue": "comparison story drawn as take-away",
+          "story": "Gardener Gia has 5 ladybugs and Grandpa Lou has 2.",
+          "prompt": "How many more ladybugs does Gardener Gia have than Grandpa Lou?"
+        },
+        {
+          "issue": "comparison story drawn as take-away",
+          "story": "Gardener Gia has 6 ladybugs and Bee-keeper Bea has 4.",
+          "prompt": "How many more ladybugs does Gardener Gia have than Bee-keeper Bea?"
+        },
+        {
+          "issue": "comparison story drawn as take-away",
+          "story": "Librarian Lee has 5 pencils and Ms. Rivera has 3.",
+          "prompt": "How many more pencils does Librarian Lee have than Ms. Rivera?"
+        },
+        {
+          "issue": "comparison story drawn as take-away",
+          "story": "Dr. Leo has 4 fossils and Explorer Ivy has 1.",
+          "prompt": "How many more fossils does Dr. Leo have than Explorer Ivy?"
+        },
+        {
+          "issue": "comparison story drawn as take-away",
+          "story": "Farmer Ada has 6 eggs and Farmer Ben has 2.",
+          "prompt": "How many more eggs does Farmer Ada have than Farmer Ben?"
+        }
+      ],
+      "distinctPrompts": 2874
+    },
+    "g1_add": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 214
+    },
+    "g1_sub": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 249
+    },
+    "g1_place": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 167
+    },
+    "g1_skip": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 24
+    },
+    "g1_compare": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 1167
+    },
+    "g1_time": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 1
+    },
+    "g1_money": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 5
+    },
+    "g1_measure": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 2000,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 7
+    },
+    "g1_stories": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 219,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 2623,
+      "examples": [
+        {
+          "issue": "comparison story drawn as take-away",
+          "story": "Baker Belle has 8 cherries and Chef Coco has 2.",
+          "prompt": "How many more cherries does Baker Belle have than Chef Coco?"
+        },
+        {
+          "issue": "comparison story drawn as take-away",
+          "story": "Scout Ali has 8 pinecones and Hiker June has 3.",
+          "prompt": "How many more pinecones does Scout Ali have than Hiker June?"
+        },
+        {
+          "issue": "comparison story drawn as take-away",
+          "story": "Fairy Faye has 12 sparkle gems and Mage Milo has 6.",
+          "prompt": "How many more sparkle gems does Fairy Faye have than Mage Milo?"
+        },
+        {
+          "issue": "comparison story drawn as take-away",
+          "story": "Sailor Sam has 12 rubies and Captain Finn has 8.",
+          "prompt": "How many more rubies does Sailor Sam have than Captain Finn?"
+        },
+        {
+          "issue": "comparison story drawn as take-away",
+          "story": "Explorer Ivy has 6 fossils and Ranger Maya has 5.",
+          "prompt": "How many more fossils does Explorer Ivy have than Ranger Maya?"
+        },
+        {
+          "issue": "comparison story drawn as take-away",
+          "story": "Diver Dan has 11 starfish and Mermaid Mia has 8.",
+          "prompt": "How many more starfish does Diver Dan have than Mermaid Mia?"
+        }
+      ],
+      "distinctPrompts": 2961
+    },
+    "g2_add": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 1078
+    },
+    "g2_sub": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 1607
+    },
+    "g2_place": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 847
+    },
+    "g2_time": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 1
+    },
+    "g2_money": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 131
+    },
+    "g2_measure": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 885,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 15
+    },
+    "g2_frac": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 1
+    },
+    "g2_array": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 2
+    },
+    "g2_stories": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 2636,
+      "examples": [],
+      "distinctPrompts": 2998
+    },
+    "g3_mult": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 81
+    },
+    "g3_div": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 81
+    },
+    "g3_frac": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 394,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [
+        {
+          "issue": "ordinal written as digits+ths",
+          "prompt": "How many 6ths make one whole?"
+        },
+        {
+          "issue": "ordinal written as digits+ths",
+          "prompt": "How many 6ths make one whole?"
+        },
+        {
+          "issue": "ordinal written as digits+ths",
+          "prompt": "How many 6ths make one whole?"
+        },
+        {
+          "issue": "ordinal written as digits+ths",
+          "prompt": "How many 8ths make one whole?"
+        },
+        {
+          "issue": "ordinal written as digits+ths",
+          "prompt": "How many 6ths make one whole?"
+        },
+        {
+          "issue": "ordinal written as digits+ths",
+          "prompt": "How many 6ths make one whole?"
+        },
+        {
+          "issue": "ordinal written as digits+ths",
+          "prompt": "How many 6ths make one whole?"
+        },
+        {
+          "issue": "ordinal written as digits+ths",
+          "prompt": "How many 8ths make one whole?"
+        }
+      ],
+      "distinctPrompts": 74
+    },
+    "g3_area": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 2
+    },
+    "g3_measure": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 8
+    },
+    "g3_geo": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 191,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [
+        {
+          "issue": "square also a rectangle/rhombus",
+          "prompt": "What is this shape called?",
+          "options": [
+            "triangle",
+            "square",
+            "rectangle",
+            "hexagon"
+          ]
+        },
+        {
+          "issue": "square also a rectangle/rhombus",
+          "prompt": "What is this shape called?",
+          "options": [
+            "trapezoid",
+            "square",
+            "rectangle",
+            "pentagon"
+          ]
+        },
+        {
+          "issue": "square also a rectangle/rhombus",
+          "prompt": "What is this shape called?",
+          "options": [
+            "square",
+            "rhombus",
+            "triangle",
+            "trapezoid"
+          ]
+        }
+      ],
+      "distinctPrompts": 20
+    },
+    "g3_data": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 51
+    },
+    "g3_round": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 1016
+    },
+    "g3_pattern": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 0,
+      "examples": [],
+      "distinctPrompts": 690
+    },
+    "g3_stories": {
+      "samples": 3000,
+      "throws": 0,
+      "dupOptions": 0,
+      "correctMissing": 0,
+      "multiCorrectShape": 0,
+      "inche": 0,
+      "compareTakeAwayVisual": 0,
+      "ordinalPlural": 0,
+      "grammarHas": 0,
+      "keywordHint": 1198,
+      "examples": [],
+      "distinctPrompts": 2840
+    },
+    "__fallbackOnFractionFailure": {
+      "prompt": "8 + 5 = ?",
+      "badge": "🧮 Math"
+    },
+    "__streakIncrementsOnLoad": true,
+    "__hintFlagRecorded": false,
+    "__csvHeaders": [
+      "'grade,topic,attempts,correct,accuracy_pct,stars,mastered,time_min\\n'"
+    ]
+  },
+  "phoneHorizontalScroll": false
+}
